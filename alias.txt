@@ -1,0 +1,22 @@
+
+alias val="valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes"
+ff() {
+    repo_root="$(git rev-parse --show-toplevel)"
+    current_dir="$(pwd)"
+    if [[ "$repo_root" != "$current_dir" ]]; then
+        echo "Not a the root of the repository ⚠️ "
+        echo "Root path : $repo_root"
+        echo "Curr Path : $current_dir"
+        return 1
+    fi
+    git add .
+    read "commit?Commit: "
+
+    # Si le message est vide, on met un message par défaut
+    if [[ -z "$commit" ]]; then
+        commit="wip"
+    fi
+
+    git commit -m "$commit"
+    git push
+}
