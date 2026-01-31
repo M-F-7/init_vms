@@ -7,7 +7,7 @@
 set -euo pipefail
 
 # link the stderr with a file to get all the erros in a file 
-exec 2>>errors.log
+#TODO: exec 2>>errors.log
 
 sudo apt update -y
 
@@ -44,6 +44,16 @@ if [[ "$install_git" == "y" || "$install_git" == "Y" || "$install_git" == "" ]];
 else
     echo "Git installation skipped ❌"
 fi
+
+########################SSH################################
+# read -p "Want to install code: [y/N]" install_code
+
+# if [[ "$install_code" == "y" || "$install_code" == "Y" || "$install_code" == "" ]]; then
+#     install_package code
+# else
+#     echo "Code installation skipped ❌"
+# fi
+
 
 
 ########################DOCKER################################
@@ -84,6 +94,7 @@ if [[ "$install_zsh" == "y" || "$install_zsh" == "Y" || "$install_zsh" == "" ]];
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended > /dev/null
     fi
 
+    #TODO
     if [ "$SHELL" != "$(which zsh)" ]; then
         chsh -s "$(which zsh)"
     fi
