@@ -78,8 +78,14 @@ fi
 read -p "Want to install git: [y/N]" install_zsh
 
 if [[ "$install_zsh" == "y" || "$install_zsh" == "Y" || "$install_zsh" == "" ]]; then
-    install_package zsh > /dev/null
-    #config
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        install_package zsh > /dev/null
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended > /dev/null
+    fi
+
+    if [ "$SHELL" != "$(which zsh)" ]; then
+        chsh -s "$(which zsh)"
+    fi
     < alias.txt >> ~/.zshrc
 
 else
