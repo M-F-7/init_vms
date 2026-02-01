@@ -102,6 +102,7 @@ if ! check_already_install docker.io; then
     if [[ "$install_docker" == "y" || "$install_docker" == "Y" || "$install_docker" == "" ]]; then
 
         install_package docker.io
+        sudo usermod -aG docker "$USER"
 
         if docker info | grep "Username" 2>/dev/null; then
 
