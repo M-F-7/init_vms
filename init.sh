@@ -31,7 +31,10 @@ install_package()
         local package="$1"
 
         # sudo apt update -y
-        sudo apt install "$package" -y > /dev/null
+        sudo apt install "$package" -y \
+          1>/dev/null \
+          2> >(grep -v "apt does not have a stable CLI interface" >&2)
+
         echo "$package is correctly installed ✅"
 }
 
