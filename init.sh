@@ -40,6 +40,7 @@ install_package()
 read -p "Want to add a user to sudoers?: [y/N]" sudo_updt
 
 if [[ "$sudo_updt" == "y" || "$sudo_updt" == "Y" || "$sudo_updt" == "" ]]; then
+    echo "Need the sudo Password"
     su -c '
     export PATH=/usr/sbin:/sbin:$PATH
     read -p "User name to add to sudoers: " username
@@ -117,8 +118,8 @@ if ! check_already_install docker.io; then
 
         install_package docker.io
         sudo usermod -aG docker "$USER"
-
-        result=$(su - "$USER" -c "docker info 2>/dev/null | grep Username")
+        echo "Need the sudo Password"
+        result=$(su - "$USER" -c "docker info 2>/dev/null | grep Username || true")
         if [ -n "$result" ]; then
 
             docker_username=$(docker info 2>/dev/null | awk -F': ' '/Username/ {print $2}') # get only the username variable
