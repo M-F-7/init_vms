@@ -36,6 +36,20 @@ install_package()
 }
 
 
+########################SUDO################################
+read -p "Want to add a user to sudoers?: [y/N]" sudo_updt
+
+if [[ "$sudo_updt" == "y" || "$sudo_updt" == "Y" || "$sudo_updt" == "" ]]; then
+    su -c '
+    export PATH=/usr/sbin:/sbin:$PATH
+    read -p "User name to add to sudoers: " username
+    usermod -aG sudo "$username"
+    echo "$username ALL=(ALL:ALL) ALL" | EDITOR="tee -a" visudo
+    '
+else
+    echo "Must be root to execute the script if you dont wanna add the user to sudoers ❌"
+fi
+
 
 ########################CURL################################
 if ! check_already_install curl; then
