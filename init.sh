@@ -132,12 +132,13 @@ if ! check_already_install docker.io; then
             #docker login [OPTIONS] [SERVER] 
             # docker login -u "$docker_username" -p "$docker_password" ## server default is dockerhub
             # echo "$docker_password" | docker login -u "$docker_username" --password-stdin
-            # if echo "$docker_password" | docker login -u "$docker_username" --password-stdin; then
-            #     echo "Login réussi✅"
-            # else
-            #     echo "Login échoué, mais le script continue❌"
-            # fi
-            echo "$docker_password" | docker login -u "$docker_username" --password-stdin || echo "login failed ❌"
+            if echo "$docker_password" | docker login -u "$docker_username" --password-stdin; then
+                echo "Login réussi✅"
+                rm ~/.docker/config.json
+            else
+                echo "Login échoué, mais le script continue❌"
+            fi
+            # echo "$docker_password" | docker login -u "$docker_username" --password-stdin || echo "login failed ❌"
         fi
     else
         echo "Docker installation skipped ❌"
