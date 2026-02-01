@@ -54,6 +54,23 @@ else
     echo "Must be root to execute the script if you dont wanna add the user to sudoers ❌"
 fi
 
+########################KEYBOARD################################
+read -p "Want to put the keyboard to AZERTY in the VM settings?: [y/N]" keyboard_vm
+if [[ "$keyboard_vm" == "y" || "$keyboard_vm" == "Y" || "$keyboard_vm" == "" ]]; then
+        sudo dpkg-reconfigure keyboard-configuration
+        sudo service keyboard-setup restart
+        exit
+        
+read -p "Want to put the keyboard to AZERTY in the current OS?: [y/N]" keyboard
+
+if [[ "$keyboard" == "y" || "$keyboard" == "Y" || "$keyboard" == "" ]]; then
+    gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'fr')]"
+    gsettings get org.gnome.desktop.input-sources sources
+else
+    echo -n "Actual version: "
+    gsettings get org.gnome.desktop.input-sources sources
+fi
+
 
 ########################CURL################################
 if ! check_already_install curl; then
