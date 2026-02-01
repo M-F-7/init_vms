@@ -28,6 +28,27 @@ install_package()
 
 
 
+########################CURL################################
+read -p "Want to install curl: [y/N]" install_curl
+
+if [[ "$install_curl" == "y" || "$install_curl" == "Y" || "$install_curl" == "" ]]; then
+    install_package curl
+else
+    echo "Curl installation skipped ❌"
+fi
+
+
+########################TREE################################
+read -p "Want to install tree: [y/N]" install_tree
+
+if [[ "$install_tree" == "y" || "$install_tree" == "Y" || "$install_tree" == "" ]]; then
+    install_package tree
+else
+    echo "Tree installation skipped ❌"
+fi
+
+
+
 ########################GIT################################
 read -p "Want to install git: [y/N]" install_git
 
@@ -102,27 +123,6 @@ if [[ "$install_zsh" == "y" || "$install_zsh" == "Y" || "$install_zsh" == "" ]];
 
 else
     echo "Zsh installation skipped ❌"
-fi
-
-
-
-########################CURL################################
-read -p "Want to install curl: [y/N]" install_curl
-
-if [[ "$install_curl" == "y" || "$install_curl" == "Y" || "$install_curl" == "" ]]; then
-    install_package curl
-else
-    echo "Curl installation skipped ❌"
-fi
-
-
-########################TREE################################
-read -p "Want to install tree: [y/N]" install_tree
-
-if [[ "$install_tree" == "y" || "$install_tree" == "Y" || "$install_tree" == "" ]]; then
-    install_package tree
-else
-    echo "Tree installation skipped ❌"
 fi
 
 
