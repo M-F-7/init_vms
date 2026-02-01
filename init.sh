@@ -118,7 +118,8 @@ if ! check_already_install docker.io; then
         install_package docker.io
         sudo usermod -aG docker "$USER"
 
-        if docker info | grep "Username" 2>/dev/null; then
+        result=$(su - "$USER" -c "docker info 2>/dev/null | grep Username")
+        if [ -n "$result" ]; then
 
             docker_username=$(docker info 2>/dev/null | awk -F': ' '/Username/ {print $2}') # get only the username variable
             echo "Already connected as $docker_username"
@@ -129,7 +130,12 @@ if ! check_already_install docker.io; then
 
             #docker login [OPTIONS] [SERVER] 
             # docker login -u "$docker_username" -p "$docker_password" ## server default is dockerhub
-            echo "$docker_password" | docker login -u "$docker_username" --password-stdin
+            # echo "$docker_password" | docker login -u "$docker_username" --password-stdin
+            if echo "$docker_password" | docker login -u "$docker_username" --password-stdin; then
+                echo "Login réussi✅"
+            else
+                echo "Login échoué, mais le script continue❌"
+            fi
         fi
     else
         echo "Docker installation skipped ❌"
