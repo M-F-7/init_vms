@@ -131,6 +131,7 @@ if ! check_already_install docker.io; then
             #read: get an input, -ps (p for prompt, s for silence)
             read -p "Docker username: " docker_username
             read -p "Docker password: " -s docker_password
+            echo ""
 
             #docker login [OPTIONS] [SERVER] 
             # docker login -u "$docker_username" -p "$docker_password" ## server default is dockerhub
