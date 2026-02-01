@@ -14,12 +14,15 @@ sudo apt update -y
 #dpkg: -s get the info of the package, if none the package is uninstall
 #command -v [COMMAND_NAME]: to get the path of the command name
 
-check_already_install()
-{
+check_already_install() {
     local package="$1"
+
     if dpkg -s "$package" > /dev/null 2>&1; then
         echo "$package is already installed"
-        dpkg -s "$package" | grep "Version"
+        dpkg -s "$package" | grep "Version" || true
+        return 0
+    else
+        return 1
     fi
 }
 
