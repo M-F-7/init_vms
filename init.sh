@@ -31,7 +31,7 @@ install_package()
         local package="$1"
 
         # sudo apt update -y
-        sudo apt install "$package" -y
+        sudo apt install "$package" -y > /dev/null
         echo "$package is correctly installed ✅"
 }
 
