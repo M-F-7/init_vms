@@ -20,6 +20,7 @@ check_already_install()
     if dpkg -s "$package" > /dev/null 2>&1; then
         echo "$package is already installed"
         dpkg -s "$package" | grep "Version"
+    fi
 }
 
 install_package()
