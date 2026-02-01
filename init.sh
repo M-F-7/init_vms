@@ -28,6 +28,8 @@ check_already_install() {
 
 install_package()
 {
+        local package="$1"
+
         # sudo apt update -y
         sudo apt install "$package" -y
         echo "$package is correctly installed ✅"
