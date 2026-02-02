@@ -120,14 +120,22 @@ fi
 ########################SSH################################
 # if ! check_already_install ssh; then
 
-#   read -p "Want to install code: [y/N]" install_code
+  read -p "Want to add an ssh key: [y/N]" ssh_key
 
-#   if [[ "$install_code" == "y" || "$install_code" == "Y" || "$install_code" == "" ]]; then
-#       install_package code
-#   else
-#       echo "Code installation skipped ❌"
-#   fi
-# fi 
+    #working only with the default path for the ssh key
+  if [[ "$ssh_key" == "y" || "$ssh_key" == "Y" || "$ssh_key" == "" ]]; then
+      read -p "Need an email for the ssh key: " ssh_mail
+      ssh-keygen -t ed25519 -C "$ssh_mail"
+      eval "$(ssh-agent -s)"
+      ssh-add ~/.ssh/id_ed25519
+      echo -n "🗝️​ Public ssh key: "
+      cat ~/.ssh/id_ed25519.pub
+      echo "Go to GitHub Settings\n Go to GitHub Settings\nPaste the copied key into the \"Key\" field and give it a title\nClick Add SSH Key."
+      ssh -T git@github.com
+  else
+      echo "Ssh key not generated ❌"
+  fi
+fi 
 
 
 ########################DOCKER################################
