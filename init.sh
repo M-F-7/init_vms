@@ -132,11 +132,12 @@ fi
       ssh-add ~/.ssh/id_ed25519
       echo -n "🗝️​ Public ssh key: "
       cat ~/.ssh/id_ed25519.pub
-      echo "Go to GitHub Settings"
-      echo "Navigate to SSH and GPG keys > New SSH Key"
-      echo "Go to GitHub Settings"
-      echo "Paste the copied key into the \"Key\" field and give it a title"
-      echo "Click Add SSH Key."
+      echo ""
+      echo "1) Go to GitHub Settings"
+      echo "2) Navigate to SSH and GPG keys > New SSH Key"
+      echo "3) Go to GitHub Settings"
+      echo "4) Paste the copied key into the \"Key\" field and give it a title"
+      echo "5) Click Add SSH Key."
       read -p "⌛ When you have finished with the precedent steps, you can press any to continue ⌛" 
       # ssh -T git@github.com
       ssh_output=$(ssh -T git@github.com || true)
