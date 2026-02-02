@@ -136,7 +136,7 @@ fi
   else
       echo "Ssh key not generated ❌"
   fi
-fi 
+# fi 
 
 
 ########################DOCKER################################
