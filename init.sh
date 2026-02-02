@@ -60,6 +60,7 @@ if [[ "$keyboard_vm" == "y" || "$keyboard_vm" == "Y" || "$keyboard_vm" == "" ]];
         sudo dpkg-reconfigure keyboard-configuration
         sudo service keyboard-setup restart
         exit
+fi
         
 read -p "Want to put the keyboard to AZERTY in the current OS?: [y/N]" keyboard
 
