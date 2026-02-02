@@ -139,7 +139,7 @@ fi
       echo "Click Add SSH Key."
       read -p "⌛ When you have finished with the precedent steps, you can press any to continue ⌛" 
       # ssh -T git@github.com
-      if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+      if ( ssh -T git@github.com 2>&1) | grep -q "successfully authenticated"; then
           echo "SSH OK ✅"
       else
           echo "SSH pas encore configuré ❌"
