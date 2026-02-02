@@ -139,11 +139,8 @@ fi
       echo "Click Add SSH Key."
       read -p "⌛ When you have finished with the precedent steps, you can press any to continue ⌛" 
       # ssh -T git@github.com
-      if ( ssh -T git@github.com 2>&1) | grep -q "successfully authenticated"; then
-          echo "SSH OK ✅"
-      else
-          echo "SSH pas encore configuré ❌"
-      fi
+      ssh_output=$(ssh -T git@github.com || true)
+      echo "$ssh_output"
   else
       echo "Ssh key not generated ❌"
   fi
