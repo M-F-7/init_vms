@@ -228,17 +228,18 @@ if ! check_already_install zsh; then
             RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null
         fi
 
-        if [ "$SHELL" != "$(which zsh)" ]; then
-            read -p "⌛ Want to switch to a zsh shell? : [y/N] " zsh_shell
-            if [[ "$zsh_shell" == "y" || "$zsh_shell" == "Y" || "$zsh_shell" == "" ]]; then
-                chsh -s "$(which zsh)"
-                exec zsh
-            fi
-        fi
-
         read -p "⌛ Want to add aliases in the .zshrc? : [y/N] " zsh_sc
         if [[ "$zsh_sc" == "y" || "$zsh_sc" == "Y" || "$zsh_sc" == "" ]]; then
             cat alias.txt >> ~/.zshrc
+        fi
+        
+        if [ "$SHELL" != "$(which zsh)" ]; then
+            read -p "⌛ Want to switch to a zsh shell? : [y/N] " zsh_shell
+            if [[ "$zsh_shell" == "y" || "$zsh_shell" == "Y" || "$zsh_shell" == "" ]]; then
+            echo "Need User session password"
+                chsh -s "$(which zsh)"
+                exec zsh #terminate the script, need to be the last command
+            fi
         fi
 
     else
