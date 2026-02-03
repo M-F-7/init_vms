@@ -231,7 +231,7 @@ if ! check_already_install code; then
           | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
         sudo apt update
         install_package code
-        code --version
+        code --version | head -n 1
     else
         echo "Code installation skipped ❌"
     fi
