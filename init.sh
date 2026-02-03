@@ -230,7 +230,12 @@ if ! check_already_install zsh; then
 
         read -p "⌛ Want to add aliases in the .zshrc? : [y/N] " zsh_sc
         if [[ "$zsh_sc" == "y" || "$zsh_sc" == "Y" || "$zsh_sc" == "" ]]; then
-            cat alias.txt >> ~/.zshrc
+            if [ -f alias.txt ]; then
+                cat alias.txt >> ~/.zshrc
+            else
+                echo "Need a file \'alias.txt\' in the current directory"
+            fi
+
         fi
         
         if [ "$SHELL" != "$(which zsh)" ]; then
