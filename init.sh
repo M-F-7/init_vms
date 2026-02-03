@@ -213,9 +213,6 @@ if ! check_already_install code; then
 fi
 
 
-########################K8s################################
-#dpkg -s kubectl
-
 ########################ZSH################################
 if ! check_already_install zsh; then
 
@@ -251,6 +248,25 @@ if ! check_already_install zsh; then
         echo "Zsh installation skipped ❌"
     fi
 fi
+
+########################MAKE################################
+read -p "Want to install NEW_FEATURE: [y/N] " install_make
+
+if [[ "$install_make" == "y" || "$install_make" == "Y" || "$install_make" == "" ]]; then
+    install_package make
+else
+    echo "NEW_FEATURE installation skipped ❌"
+fi
+
+########################K8S################################
+#dpkg -s kubectl
+# read -p "Want to install NEW_FEATURE: [y/N] " install_k8s
+
+# if [[ "$install_k8s" == "y" || "$install_k8s" == "Y" || "$install_k8s" == "" ]]; then
+#     install_package NEW_FEATURE
+# else
+#     echo "NEW_FEATURE installation skipped ❌"
+# fi
 
 ########################NEW_FEATURE################################
 # read -p "Want to install NEW_FEATURE: [y/N] " NEW_FEATURE
