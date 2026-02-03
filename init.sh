@@ -213,10 +213,34 @@ fi
 
 
 ########################CODE################################
-# read -p "Want to install code: [y/N]" install_code
+if ! check_already_install code; then
+    if ! check_already_install wget; then
+        install_package wget
+    fi
+    if ! check_already_install gpg; then
+        install_package gpg
+    fi
 
-# if [[ "$install_code" == "y" || "$install_code" == "Y" || "$install_code" == "" ]]; then
-#     install_package code
+    read -p "Want to install code: [y/N]" install_code
+
+    if [[ "$install_code" == "y" || "$install_code" == "Y" || "$install_code" == "" ]]; then
+        # Import de la clé Microsoft
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/ms_vscode.gpg > /dev/null
+        # Ajout du dépôt officiel
+        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ms_vscode.gpg] https://packages.microsoft.com/repos/code stable main" \
+          | sudo tee /etc/apt/sources.list.d/vscode.list
+        install_package code
+        code --version
+    else
+        echo "Code installation skipped ❌"
+    fi
+fi
+
+########################NEW_FEATURE################################
+# read -p "Want to install NEW_FEATURE: [y/N]" NEW_FEATURE
+
+# if [[ "$NEW_FEATURE" == "y" || "$NEW_FEATURE" == "Y" || "$NEW_FEATURE" == "" ]]; then
+#     install_package NEW_FEATURE
 # else
-#     echo "Code installation skipped ❌"
+#     echo "NEW_FEATURE installation skipped ❌"
 # fi
