@@ -192,7 +192,7 @@ fi
 ########################ZSH################################
 if ! check_already_install zsh; then
 
-    read -p "⌛ Want to install zsh: [y/N] " install_zsh
+    read -p "⌛ Want to install zsh: [y/N] (need git and curl installed)" install_zsh
 
     if [[ "$install_zsh" == "y" || "$install_zsh" == "Y" || "$install_zsh" == "" ]]; then
         if [ ! -d "$HOME/.oh-my-zsh" ]; then
