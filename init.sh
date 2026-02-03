@@ -189,6 +189,33 @@ fi
 #dpkg -s kubectl
 
 
+########################CODE################################
+if ! check_already_install code; then
+    read -p "⌛ Want to install code: [y/N] " install_code
+    if [[ "$install_code" == "y" || "$install_code" == "Y" || "$install_code" == "" ]]; then
+        if ! check_already_install wget; then
+            install_package wget
+        fi
+        if ! check_already_install gpg; then
+        install_package gpg
+        fi
+        # Import de la clé Microsoft
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/ms_vscode.gpg > /dev/null
+        # Ajout du dépôt officiel
+        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ms_vscode.gpg] https://packages.microsoft.com/repos/code stable main" \
+          | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+        sudo apt update
+        install_package code
+        code --version | head -n 1
+    else
+        echo "Code installation skipped ❌"
+    fi
+fi
+
+
+########################K8s################################
+#dpkg -s kubectl
+
 ########################ZSH################################
 if ! check_already_install zsh; then
 
@@ -201,11 +228,14 @@ if ! check_already_install zsh; then
             RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null
         fi
 
-        #TODO
-
         if [ "$SHELL" != "$(which zsh)" ]; then
+            read -p "⌛ Want to switch to a zsh shell? : [y/N] " zsh_shell
+            if [[ "$zsh_shell" == "y" || "$zsh_shell" == "Y" || "$zsh_shell" == "" ]]; then
                 chsh -s "$(which zsh)"
+                exec zsh
+            fi
         fi
+
         read -p "⌛ Want to add aliases in the .zshrc? : [y/N] " zsh_sc
         if [[ "$zsh_sc" == "y" || "$zsh_sc" == "Y" || "$zsh_sc" == "" ]]; then
             cat alias.txt >> ~/.zshrc
@@ -213,32 +243,6 @@ if ! check_already_install zsh; then
 
     else
         echo "Zsh installation skipped ❌"
-    fi
-fi
-
-
-########################CODE################################
-if ! check_already_install code; then
-    if ! check_already_install wget; then
-        install_package wget
-    fi
-    if ! check_already_install gpg; then
-        install_package gpg
-    fi
-
-    read -p "⌛ Want to install code: [y/N] " install_code
-
-    if [[ "$install_code" == "y" || "$install_code" == "Y" || "$install_code" == "" ]]; then
-        # Import de la clé Microsoft
-        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/ms_vscode.gpg > /dev/null
-        # Ajout du dépôt officiel
-        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ms_vscode.gpg] https://packages.microsoft.com/repos/code stable main" \
-          | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-        sudo apt update
-        install_package code
-        code --version | head -n 1
-    else
-        echo "Code installation skipped ❌"
     fi
 fi
 
