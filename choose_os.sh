@@ -10,7 +10,7 @@ read -p "What OS do you want to choose:
 case "$os_verison" in
     1|DEBIAN|debian)
         chmod +x init_debian.sh
-        ./init_debian.sh "sudo apt"
+        ./init_debian.sh "sudo apt install"
         ;;
 
     2|ALPINE|alpine)
@@ -21,6 +21,6 @@ case "$os_verison" in
 
     3|macos|MACOS)
         chmod +x init_macos.sh 
-        bash ./init_macos.sh "brew"
+        bash ./init_macos.sh "brew install"
         ;;
 esac
