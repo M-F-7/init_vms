@@ -9,6 +9,8 @@ set -euo pipefail
 # link the stderr with a file to get all the erros in a file 
 #TODO: exec 2>>errors.log
 
+# package_manager=$1
+
 sudo apt update -y
 
 #dpkg: -s get the info of the package, if none the package is uninstall
@@ -31,6 +33,7 @@ install_package()
         local package="$1"
 
         # sudo apt update -y
+        # eval "$package_manager" "$package"
         sudo apt install "$package" -y \
             1>/dev/null \
             2> >(grep -v "apt does not have a stable CLI interface" >&2)
