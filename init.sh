@@ -41,7 +41,7 @@ install_package()
 
 
 ########################SUDO################################
-read -p "Want to add a user to sudoers?: [y/N]" sudo_updt
+read -p "⌛ Want to add a user to sudoers?: [y/N] " sudo_updt
 
 if [[ "$sudo_updt" == "y" || "$sudo_updt" == "Y" || "$sudo_updt" == "" ]]; then
     echo "Need the sudo Password ​🦸🏻​"
@@ -56,14 +56,14 @@ else
 fi
 
 ########################KEYBOARD################################
-read -p "Want to put the keyboard to AZERTY in the VM settings?: [y/N]" keyboard_vm
+read -p "⌛ Want to put the keyboard to AZERTY in the VM settings?: [y/N] " keyboard_vm
 if [[ "$keyboard_vm" == "y" || "$keyboard_vm" == "Y" || "$keyboard_vm" == "" ]]; then
         sudo dpkg-reconfigure keyboard-configuration
         sudo service keyboard-setup restart
         exit
 fi
         
-read -p "Want to put the keyboard to AZERTY in the current OS?: [y/N]" keyboard
+read -p "⌛ Want to put the keyboard to AZERTY in the current OS?: [y/N] " keyboard
 
 if [[ "$keyboard" == "y" || "$keyboard" == "Y" || "$keyboard" == "" ]]; then
     gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'fr')]"
@@ -76,7 +76,7 @@ fi
 
 ########################CURL################################
 if ! check_already_install curl; then
-    read -p "Want to install curl: [y/N]" install_curl
+    read -p "⌛ Want to install curl: [y/N] " install_curl
 
     if [[ "$install_curl" == "y" || "$install_curl" == "Y" || "$install_curl" == "" ]]; then
         install_package curl
@@ -88,7 +88,7 @@ fi
 
 ########################TREE################################
 if ! check_already_install tree; then
-    read -p "Want to install tree: [y/N]" install_tree
+    read -p "⌛ Want to install tree: [y/N] " install_tree
 
     if [[ "$install_tree" == "y" || "$install_tree" == "Y" || "$install_tree" == "" ]]; then
         install_package tree
@@ -102,7 +102,7 @@ fi
 ########################GIT################################
 if ! check_already_install git; then
 
-    read -p "Want to install git: [y/N]" install_git
+    read -p "⌛ Want to install git: [y/N] " install_git
 
     if [[ "$install_git" == "y" || "$install_git" == "Y" || "$install_git" == "" ]]; then
         install_package git
@@ -122,7 +122,7 @@ fi
 ########################SSH################################
 # if ! check_already_install ssh; then
 
-  read -p "Want to add an ssh key: [y/N]" ssh_key
+  read -p "⌛ Want to add an ssh key: [y/N] " ssh_key
 
     #working only with the default path for the ssh key
   if [[ "$ssh_key" == "y" || "$ssh_key" == "Y" || "$ssh_key" == "" ]]; then
@@ -150,7 +150,7 @@ fi
 
 ########################DOCKER################################
 if ! check_already_install docker.io; then
-    read -p "Want to install docker: [y/N]" install_docker
+    read -p "⌛ Want to install docker: [y/N] " install_docker
 
     if [[ "$install_docker" == "y" || "$install_docker" == "Y" || "$install_docker" == "" ]]; then
 
@@ -192,7 +192,7 @@ fi
 ########################ZSH################################
 if ! check_already_install zsh; then
 
-    read -p "Want to install zsh: [y/N]" install_zsh
+    read -p "⌛ Want to install zsh: [y/N] " install_zsh
 
     if [[ "$install_zsh" == "y" || "$install_zsh" == "Y" || "$install_zsh" == "" ]]; then
         if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -221,7 +221,7 @@ if ! check_already_install code; then
         install_package gpg
     fi
 
-    read -p "Want to install code: [y/N]" install_code
+    read -p "⌛ Want to install code: [y/N] " install_code
 
     if [[ "$install_code" == "y" || "$install_code" == "Y" || "$install_code" == "" ]]; then
         # Import de la clé Microsoft
@@ -238,7 +238,7 @@ if ! check_already_install code; then
 fi
 
 ########################NEW_FEATURE################################
-# read -p "Want to install NEW_FEATURE: [y/N]" NEW_FEATURE
+# read -p "Want to install NEW_FEATURE: [y/N] " NEW_FEATURE
 
 # if [[ "$NEW_FEATURE" == "y" || "$NEW_FEATURE" == "Y" || "$NEW_FEATURE" == "" ]]; then
 #     install_package NEW_FEATURE
