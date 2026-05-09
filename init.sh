@@ -123,7 +123,7 @@ if ! check_already_install git; then
 fi
 
 ########################SSH################################
-# if ! check_already_install ssh; then
+if ! check_already_install ssh; then
 
   read -p "⌛ Want to add an ssh key: [y/N] " ssh_key
 
@@ -148,7 +148,7 @@ fi
   else
       echo "Ssh key not generated ❌"
   fi
-# fi 
+fi 
 
 
 ########################DOCKER################################
