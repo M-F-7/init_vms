@@ -1,1 +1,1 @@
-need to add nvim, tmux (multiple terminal window), superfile (file manager), branchlet (git branches manager), taproom (interactive packets manager), stormy(weather info (maybe useful to be integrated), smassh(monkey type), jrnl(journal)
+need to add opencode, nvim, tmux (multiple terminal window), superfile (file manager), branchlet (git branches manager), taproom (interactive packets manager), stormy(weather info (maybe useful to be integrated), smassh(monkey type), jrnl(journal)
