@@ -115,7 +115,7 @@ fi
 
 
 ########################CARGO################################
-if cargo --version > /dev/null 2>&1; then
+if cargo --version > /dev/null 2>&1; then #TOFIX: il se print pas
     echo "CARGO is already installed"
     cargo --version
 else
@@ -347,7 +347,7 @@ fi
 # fi
 
 ########################OPENCODE################################ 
-if opencode --version > /dev/null 2>&1; then
+if opencode --version > /dev/null 2>&1; then #TOFIX: il se print pas
     echo "OPENCODE is already installed"
     opencode --version
 else
