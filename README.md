@@ -1,8 +1,20 @@
 need to add opencode, nvim, tmux (multiple terminal window), superfile (file manager), branchlet (git branches manager), pkgtop & taproom (interactive packets manager(LINUX & MACOS), stormy(weather info (maybe useful to be integrated), smassh(monkey type), jrnl(journal), navi (mini-man)
 
+
+✨ edex-ui ✨
+DL le bon format https://github.com/gitsquared/edex-ui/releases
+
+sudo add-apt-repository universe                  
+sudo apt install libfuse2t64
+
+
+./eDEX-UI.AppImage --appimage-extract
+sudo chown root:root squashfs-root/chrome-sandbox
+sudo chmod 4755 squashfs-root/chrome-sandbox
+./squashfs-root/AppRun
+
+
 npm et cargo
-
-
 
 npm -v
 Sur Linux :
