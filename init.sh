@@ -105,7 +105,7 @@ if ! check_already_install npm; then
     read -p "Want to install npm: [y/N] " npm
 
     if [[ "$npm" == "y" || "$npm" == "Y" || "$npm" == "" ]]; then
-        echo "It can take some time to install nodejs and npm, be patient... ⌛" #TOFIX il se print pas
+        echo "It can take some time to install nodejs and npm, be patient... ⌛" 
         install_package nodejs
         install_package npm
     else
@@ -123,7 +123,7 @@ else
 
     if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
         curl https://sh.rustup.rs -sSf | sh -s -- -y > /dev/null #TOFIX il se cach pas
-        source "$HOME/.cargo/env"
+        source "$HOME/.cargo/env" #TOFIX: il ne se fais pas sous shekk ou enlever l expand 
     else
         echo "CARGO installation skipped ❌"
     fi
@@ -168,7 +168,7 @@ fi
 
 
 ########################GIT################################
-if ! check_already_install git; then
+if ! check_already_install git; then #TOFIX: already install alors que nan
 
     read -p "⌛ Want to install git: [y/N] " install_git
 
@@ -254,7 +254,7 @@ fi
 
 
 ########################CODE################################
-if ! check_already_install code; then
+if ! check_already_install code; then #TOFIX: wrong version
     read -p "⌛ Want to install code: [y/N] " install_code
     if [[ "$install_code" == "y" || "$install_code" == "Y" || "$install_code" == "" ]]; then
         if ! check_already_install wget; then
