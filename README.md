@@ -1,4 +1,4 @@
-need to add opencode, nvim, tmux (multiple terminal window), superfile (file manager), branchlet (git branches manager), taproom (interactive packets manager), stormy(weather info (maybe useful to be integrated), smassh(monkey type), jrnl(journal), navi (mini-man)
+need to add opencode, nvim, tmux (multiple terminal window), superfile (file manager), branchlet (git branches manager), pkgtop & taproom (interactive packets manager(LINUX & MACOS), stormy(weather info (maybe useful to be integrated), smassh(monkey type), jrnl(journal), navi (mini-man)
 
 npm et cargo
 
