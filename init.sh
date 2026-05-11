@@ -115,13 +115,18 @@ fi
 
 
 ########################CARGO################################
-read -p "Want to install CARGO: [y/N] " CARGO
-
-if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
-    curl https://sh.rustup.rs -sSf | sh -s -- -y > /dev/null #TOFIX il se cach pas
-    source "$HOME/.cargo/env"
+if cargo --version > /dev/null 2>&1; then
+    echo "CARGO is already installed"
+    cargo --version
 else
-    echo "CARGO installation skipped ❌"
+    read -p "Want to install CARGO: [y/N] " CARGO
+
+    if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
+        curl https://sh.rustup.rs -sSf | sh -s -- -y > /dev/null #TOFIX il se cach pas
+        source "$HOME/.cargo/env"
+    else
+        echo "CARGO installation skipped ❌"
+    fi
 fi
 
 
@@ -341,27 +346,37 @@ fi
 #     echo "NEW_FEATURE installation skipped ❌"
 # fi
 
-########################OPENCODE################################
-read -p "Want to install opencode: [y/N] " opencode
-
-if [[ "$opencode" == "y" || "$opencode" == "Y" || "$opencode" == "" ]]; then
-    curl -fsSL https://opencode.ai/install | bash
+########################OPENCODE################################ 
+if opencode --version > /dev/null 2>&1; then
+    echo "OPENCODE is already installed"
+    opencode --version
 else
-    echo "opencode installation skipped ❌"
+    read -p "Want to install opencode: [y/N] " opencode
+
+    if [[ "$opencode" == "y" || "$opencode" == "Y" || "$opencode" == "" ]]; then
+        curl -fsSL https://opencode.ai/install | bash
+    else
+        echo "opencode installation skipped ❌"
+    fi
 fi
- 
+
 
 ########################NVIM################################
-read -p "Want to install nvim: [y/N] " nvim
-
-if [[ "$nvim" == "y" || "$nvim" == "Y" || "$nvim" == "" ]]; then
-    echo "It can take some time to install nvim, be patient... ⌛"
-    rm -rf neovim
-    git clone https://github.com/neovim/neovim.git && cd neovim
-    make CMAKE_BUILD_TYPE=RelWithDebInfo > /dev/null
-    sudo make install > /dev/null
+if nvim --version > /dev/null 2>&1; then
+    echo "NVIM is already installed"
+    nvim --version | head -n 1
 else
-    echo "nvim installation skipped ❌"
+    read -p "Want to install nvim: [y/N] " nvim
+
+    if [[ "$nvim" == "y" || "$nvim" == "Y" || "$nvim" == "" ]]; then
+        echo "It can take some time to install nvim, be patient... ⌛"
+        rm -rf neovim
+        git clone https://github.com/neovim/neovim.git && cd neovim
+        make CMAKE_BUILD_TYPE=RelWithDebInfo > /dev/null
+        sudo make install > /dev/null
+    else
+        echo "nvim installation skipped ❌"
+    fi
 fi
 
 
