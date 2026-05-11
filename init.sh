@@ -104,6 +104,7 @@ fi
 read -p "Want to install npm: [y/N] " npm
 
 if [[ "$npm" == "y" || "$npm" == "Y" || "$npm" == "" ]]; then
+    echo "It can take some time to install nodejs and npm, be patient... ⌛"
     install_package nodejs
     install_package npm
 else
@@ -115,7 +116,8 @@ fi
 read -p "Want to install CARGO: [y/N] " CARGO
 
 if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
-    curl https://sh.rustup.rs -sSf | sh -s -- -y
+    curl https://sh.rustup.rs -sSf | sh -s -- -y > /dev/null
+    source "$HOME/.cargo/env"
 else
     echo "CARGO installation skipped ❌"
 fi
@@ -126,8 +128,7 @@ fi
 read -p "Want to install GO: [y/N] " GO
 
 if [[ "$GO" == "y" || "$GO" == "Y" || "$GO" == "" ]]; then
-    rm -rf /usr/local/go && tar -C /usr/local -xzf go1.26.3.linux-amd64.tar.gz
-    export PATH=$PATH:/usr/local/go/bin
+    install_package golang
 else
     echo "GO installation skipped ❌"
 fi
@@ -486,7 +487,32 @@ fi
 ########################KUBECTL################################
 read -p "Want to install KUBECTL: [y/N] " KUBECTL
 
-if [[ "$KUBECTL" == "y" || "$KUBECTL" == "Y" || "$KUBECTL" == "" ]]; then
+if [[ "$KUBECTL" == "y" || "$tree --version
+npm -v
+cargo -V
+go version
+pip --version
+pipx --version
+git --version
+ssh -V
+docker --version
+code --version | head -n 1
+zsh --version
+make --version
+opencode --version
+nvim --version | head -n 1
+tmux -V
+# taproom --version
+superfile --version
+branchlet --version
+pkgtop -v
+stormy --version
+smassh --version
+jrnl --version
+# navi --version
+ls ~/squashfs-root/edex-ui || echo "EDEXUI version not found"
+kubectl version --client
+kind versionKUBECTL" == "Y" || "$KUBECTL" == "" ]]; then
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
     sudo mv kubectl /usr/local/bin/    
