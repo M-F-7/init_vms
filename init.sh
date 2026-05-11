@@ -130,7 +130,6 @@ else
 fi
 
 
-
 ########################GO################################
 if ! check_already_install golang; then
     read -p "Want to install GO: [y/N] " GO
@@ -269,7 +268,7 @@ if ! check_already_install code; then
         # Ajout du dépôt officiel
         echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ms_vscode.gpg] https://packages.microsoft.com/repos/code stable main" \
           | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-        sudo apt update
+        # sudo apt update -y > /dev/null
         install_package code
         code --version | head -n 1
     else
@@ -303,7 +302,7 @@ if ! check_already_install zsh; then
         if [ "$SHELL" != "$(which zsh)" ]; then
             read -p "⌛ Want to switch to a zsh shell? : [y/N] " zsh_shell
             if [[ "$zsh_shell" == "y" || "$zsh_shell" == "Y" || "$zsh_shell" == "" ]]; then
-            echo "Need User session password"
+                echo "Need User session password"
                 chsh -s "$(which zsh)"
                 # exec zsh #terminate the script, need to be the last command
             fi
@@ -326,7 +325,7 @@ if ! check_already_install make; then
 fi
 
 ########################CMAKE################################
-if ! check_already_install cmake; then
+if ! check_already_install cmake; then #TOFIX: il se print pas
     read -p "Want to install CMAKE: [y/N] " install_cmake
 
     if [[ "$install_cmake" == "y" || "$install_cmake" == "Y" || "$install_cmake" == "" ]]; then
@@ -357,7 +356,7 @@ else
         curl -fsSL https://opencode.ai/install | bash
             # Add opencode to PATH
         echo 'export PATH="$HOME/.opencode/bin:$PATH"' >> ~/.zshrc
-        source ~/.zshrc
+        # source ~/.zshrc
         echo "OPENCODE is correctly installed ✅"
     else
         echo "opencode installation skipped ❌"
