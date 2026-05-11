@@ -139,7 +139,7 @@ fi
 
 
 ########################PIP################################
-if ! check_already_install pip; then
+if ! check_already_install python3-pip; then
     read -p "Want to install PIP: [y/N] " PIP
 
     if [[ "$PIP" == "y" || "$PIP" == "Y" || "$PIP" == "" ]]; then
@@ -310,21 +310,25 @@ if ! check_already_install zsh; then
 fi
 
 ########################MAKE################################
-read -p "Want to install MAKE: [y/N] " install_make
+if ! check_already_install make; then
+    read -p "Want to install MAKE: [y/N] " install_make
 
-if [[ "$install_make" == "y" || "$install_make" == "Y" || "$install_make" == "" ]]; then
-    install_package make
-else
-    echo "MAKE installation skipped ❌"
+    if [[ "$install_make" == "y" || "$install_make" == "Y" || "$install_make" == "" ]]; then
+        install_package make
+    else
+        echo "MAKE installation skipped ❌"
+    fi
 fi
 
 ########################CMAKE################################
-read -p "Want to install CMAKE: [y/N] " install_cmake
+if ! check_already_install cmake; then
+    read -p "Want to install CMAKE: [y/N] " install_cmake
 
-if [[ "$install_cmake" == "y" || "$install_cmake" == "Y" || "$install_cmake" == "" ]]; then
-    install_package cmake
-else
-    echo "CMAKE installation skipped ❌"
+    if [[ "$install_cmake" == "y" || "$install_cmake" == "Y" || "$install_cmake" == "" ]]; then
+        install_package cmake
+    else
+        echo "CMAKE installation skipped ❌"
+    fi
 fi
 
 # #######################K8S################################
@@ -351,10 +355,11 @@ fi
 read -p "Want to install nvim: [y/N] " nvim
 
 if [[ "$nvim" == "y" || "$nvim" == "Y" || "$nvim" == "" ]]; then
+    echo "It can take some time to install nvim, be patient... ⌛"
     rm -rf neovim
     git clone https://github.com/neovim/neovim.git && cd neovim
-    make CMAKE_BUILD_TYPE=RelWithDebInfo    
-    sudo make install
+    make CMAKE_BUILD_TYPE=RelWithDebInfo > /dev/null
+    sudo make install > /dev/null
 else
     echo "nvim installation skipped ❌"
 fi
@@ -368,9 +373,8 @@ if [[ "$tmux" == "y" || "$tmux" == "Y" || "$tmux" == "" ]]; then
     rm -rf tmux
     git clone https://github.com/tmux/tmux.git
     cd tmux
-    ./configure
-    make
-    sudo make install
+    sh autogen.sh
+    ./configure && make
 else
     echo "tmux installation skipped ❌"
 fi
