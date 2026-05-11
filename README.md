@@ -7,8 +7,9 @@ DL le bon format https://github.com/gitsquared/edex-ui/releases
 sudo add-apt-repository universe                  
 sudo apt install libfuse2t64
 
-
-./eDEX-UI.AppImage --appimage-extract
+#depend de l' OS (ici pour Debian (>= 13) and Ubuntu (>= 24.04):
+#more info https://github.com/AppImage/AppImageKit/wiki/FUSE
+./eDEX-UI.AppImage --appimage-extract 
 sudo chown root:root squashfs-root/chrome-sandbox
 sudo chmod 4755 squashfs-root/chrome-sandbox
 
