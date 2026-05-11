@@ -355,6 +355,10 @@ else
 
     if [[ "$opencode" == "y" || "$opencode" == "Y" || "$opencode" == "" ]]; then
         curl -fsSL https://opencode.ai/install | bash
+            # Add opencode to PATH
+        echo 'export PATH="$HOME/.opencode/bin:$PATH"' >> ~/.zshrc
+        source ~/.zshrc
+        echo "OPENCODE is correctly installed ✅"
     else
         echo "opencode installation skipped ❌"
     fi
@@ -374,6 +378,7 @@ else
         git clone https://github.com/neovim/neovim.git && cd neovim
         make CMAKE_BUILD_TYPE=RelWithDebInfo > /dev/null
         sudo make install > /dev/null
+        echo "NVIM is correctly installed ✅"
     else
         echo "nvim installation skipped ❌"
     fi
@@ -382,53 +387,82 @@ fi
 
 
 ########################TMUX################################
-read -p "Want to install tmux: [y/N] " tmux
-
-if [[ "$tmux" == "y" || "$tmux" == "Y" || "$tmux" == "" ]]; then
-    rm -rf tmux
-    git clone https://github.com/tmux/tmux.git
-    cd tmux
-    sh autogen.sh
-    ./configure && make
+if tmux -V > /dev/null 2>&1; then
+    echo "TMUX is already installed"
+    tmux -V
 else
-    echo "tmux installation skipped ❌"
+    read -p "Want to install tmux: [y/N] " tmux
+
+    if [[ "$tmux" == "y" || "$tmux" == "Y" || "$tmux" == "" ]]; then
+        rm -rf tmux
+        git clone https://github.com/tmux/tmux.git
+        cd tmux
+        install_package autoconf
+        install_package libtool
+        install_package automake
+        install_package pkg-config
+        sh autogen.sh > /dev/null
+        ./configure && make > /dev/null
+        # add tmux to a directory in your PATH
+        echo "tmux is correctly installed ✅"
+    else
+        echo "tmux installation skipped ❌"
+    fi
 fi
 
 
 
 ########################SUPERFILE################################
-read -p "Want to install superfile: [y/N] " superfile
-
-if [[ "$superfile" == "y" || "$superfile" == "Y" || "$superfile" == "" ]]; then
-    bash -c "$(curl -sLo- https://superfile.dev/install.sh)"
+if superfile --version > /dev/null 2>&1; then
+    echo "SUPERFILE is already installed"
+    superfile --version
 else
-    echo "superfile installation skipped ❌"
+    read -p "Want to install superfile: [y/N] " superfile
+    
+    if [[ "$superfile" == "y" || "$superfile" == "Y" || "$superfile" == "" ]]; then
+        bash -c "$(curl -sLo- https://superfile.dev/install.sh)" > /dev/null
+        echo "SUPERFILE is correctly installed ✅"
+    else
+        echo "superfile installation skipped ❌"
+    fi
 fi
-
 
 
 ########################BRANCHLET################################
-read -p "Want to install branchlet: [y/N] " branchlet
-
-if [[ "$branchlet" == "y" || "$branchlet" == "Y" || "$branchlet" == "" ]]; then
-    npm install -g branchlet
+if branchlet --version > /dev/null 2>&1; then
+    echo "BRANCHLET is already installed"
+    branchlet --version
 else
-    echo "branchlet installation skipped ❌"
-fi
+    read -p "Want to install branchlet: [y/N] " branchlet
 
+    if [[ "$branchlet" == "y" || "$branchlet" == "Y" || "$branchlet" == "" ]]; then
+        npm install -g branchlet > /dev/null
+        # Add branchlet to PATH
+        echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
+        source ~/.zshrc
+        echo "BRANCHLET is correctly installed ✅"
+    else
+        echo "branchlet installation skipped ❌"
+    fi
+fi
 
 
 ########################PKGTOP################################
-read -p "Want to install PKGTOP: [y/N] " PKGTOP
-
-if [[ "$PKGTOP" == "y" || "$PKGTOP" == "Y" || "$PKGTOP" == "" ]]; then
-    git clone https://aur.archlinux.org/pkgtop.git && cd pkgtop/
-    go build cmd/pkgtop.go
-    sudo mv pkgtop /usr/local/bin/
+if pkgtop -v > /dev/null 2>&1; then
+    echo "PKGTOP is already installed"
+    pkgtop -v
 else
-    echo "PKGTOP installation skipped ❌"
-fi
+    read -p "Want to install PKGTOP: [y/N] " PKGTOP
 
+    if [[ "$PKGTOP" == "y" || "$PKGTOP" == "Y" || "$PKGTOP" == "" ]]; then
+        git clone https://aur.archlinux.org/pkgtop.git > /dev/null && cd pkgtop/ 
+        go build cmd/pkgtop.go > /dev/null
+        sudo mv pkgtop /usr/local/bin/
+        echo "PKGTOP is correctly installed ✅"
+    else
+        echo "PKGTOP installation skipped ❌"
+    fi
+fi
 
 
 ########################TAPROOM################################
@@ -442,42 +476,55 @@ fi
 
 
 ########################STORMY################################
-read -p "Want to install STORMY: [y/N] " STORMY
-
-if [[ "$STORMY" == "y" || "$STORMY" == "Y" || "$STORMY" == "" ]]; then
-    rm -rf stormy
-    git clone https://github.com/ashish0kumar/stormy.git
-    cd stormy
-
-    # Build the application
-    go build
-
-    # Move to a directory in your PATH
-    sudo mv stormy /usr/local/bin/
+if stormy --version > /dev/null 2>&1; then
+    echo "STORMY is already installed"
+    stormy --version
 else
-    echo "STORMY installation skipped ❌"
+    read -p "Want to install STORMY: [y/N] " STORMY
+
+    if [[ "$STORMY" == "y" || "$STORMY" == "Y" || "$STORMY" == "" ]]; then
+        rm -rf stormy
+        git clone https://github.com/ashish0kumar/stormy.git
+        cd stormy
+
+        # Build the application
+        go build
+
+        # Move to a directory in your PATH
+        sudo mv stormy /usr/local/bin/
+    else
+        echo "STORMY installation skipped ❌"
+    fi
 fi
 
 
 ########################SMASSH################################
-read -p "Want to install SMASSH: [y/N] " SMASSH
-
-if [[ "$SMASSH" == "y" || "$SMASSH" == "Y" || "$SMASSH" == "" ]]; then
-    pip install smassh
+if smassh --version > /dev/null 2>&1; then
+    echo "SMASSH is already installed"
+    smassh --version
 else
-    echo "SMASSH installation skipped ❌"
-fi
+    read -p "Want to install SMASSH: [y/N] " SMASSH
 
+    if [[ "$SMASSH" == "y" || "$SMASSH" == "Y" || "$SMASSH" == "" ]]; then
+        pip install smassh
+    else
+        echo "SMASSH installation skipped ❌"
+    fi
+fi
 
 ########################JRNL################################
-read -p "Want to install JRNL: [y/N] " JRNL
-
-if [[ "$JRNL" == "y" || "$JRNL" == "Y" || "$JRNL" == "" ]]; then
-    pipx install jrnl
+if jrnl --version > /dev/null 2>&1; then
+    echo "JRNL is already installed"
+    jrnl --version
 else
-    echo "JRNL installation skipped ❌"
-fi
+    read -p "Want to install JRNL: [y/N] " JRNL
 
+    if [[ "$JRNL" == "y" || "$JRNL" == "Y" || "$JRNL" == "" ]]; then
+        pipx install jrnl
+    else
+        echo "JRNL installation skipped ❌"
+    fi
+fi
 
 
 ########################NAVI################################
@@ -491,74 +538,64 @@ fi
 
 
 ########################EDEXUI################################
-read -p "Want to install EDEXUI: [y/N] " EDEXUI
-
-if [[ "$EDEXUI" == "y" || "$EDEXUI" == "Y" || "$EDEXUI" == "" ]]; then
-    sudo add-apt-repository universe                  
-    sudo apt install libfuse2t64
-    rm -rf edex-ui
-    git clone https://github.com/GitSquared/edex-ui.git && cd edex-ui
-    #depend de l' OS (ici pour Debian (>= 13) and Ubuntu (>= 24.04):
-    #more info https://github.com/AppImage/AppImageKit/wiki/FUSE
-    npm run build-linux
-    # ./eDEX-UI.AppImage --appimage-extract 
-    sudo chown root:root squashfs-root/chrome-sandbox
-    sudo chmod 4755 squashfs-root/chrome-sandbox
-    mv squashfs-root ~/
-    #./squashfs-root/AppRun
+if ls ~/squashfs-root/edex-ui > /dev/null 2>&1; then
+    echo "EDEXUI is already installed"
+    #./squashfs-root/AppRun --version
 else
-    echo "EDEXUI installation skipped ❌"
-fi
+    read -p "Want to install EDEXUI: [y/N] " EDEXUI
 
+    if [[ "$EDEXUI" == "y" || "$EDEXUI" == "Y" || "$EDEXUI" == "" ]]; then
+        sudo add-apt-repository universe                  
+        sudo apt install libfuse2t64
+        rm -rf edex-ui
+        git clone https://github.com/GitSquared/edex-ui.git && cd edex-ui
+        #depend de l' OS (ici pour Debian (>= 13) and Ubuntu (>= 24.04):
+        #more info https://github.com/AppImage/AppImageKit/wiki/FUSE
+        npm run build-linux
+        # ./eDEX-UI.AppImage --appimage-extract 
+        sudo chown root:root squashfs-root/chrome-sandbox
+        sudo chmod 4755 squashfs-root/chrome-sandbox
+        mv squashfs-root ~/
+        #./squashfs-root/AppRun
+    else
+        echo "EDEXUI installation skipped ❌"
+    fi
+fi
 
 
 ########################KIND################################
-read -p "Want to install KIND: [y/N] " KIND
-
-if [[ "$KIND" == "y" || "$KIND" == "Y" || "$KIND" == "" ]]; then
-    curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
-    chmod +x ./kind
-    sudo mv ./kind /usr/local/bin/kind
+if kind version > /dev/null 2>&1; then
+    echo "KIND is already installed"
+    kind version
 else
-    echo "KIND installation skipped ❌"
-fi
+    read -p "Want to install KIND: [y/N] " KIND
 
+    if [[ "$KIND" == "y" || "$KIND" == "Y" || "$KIND" == "" ]]; then
+        curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64 > /dev/null
+        chmod +x ./kind
+        sudo mv ./kind /usr/local/bin/kind
+    else
+        echo "KIND installation skipped ❌"
+    fi
+fi
 
 ########################KUBECTL################################
-read -p "Want to install KUBECTL: [y/N] " KUBECTL
-
-if [[ "$KUBECTL" == "y" || "$tree --version
-npm -v
-cargo -V
-go version
-pip --version
-pipx --version
-git --version
-ssh -V
-docker --version
-code --version | head -n 1
-zsh --version
-make --version
-opencode --version
-nvim --version | head -n 1
-tmux -V
-# taproom --version
-superfile --version
-branchlet --version
-pkgtop -v
-stormy --version
-smassh --version
-jrnl --version
-# navi --version
-ls ~/squashfs-root/edex-ui || echo "EDEXUI version not found"
-kubectl version --client
-kind versionKUBECTL" == "Y" || "$KUBECTL" == "" ]]; then
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    chmod +x kubectl
-    sudo mv kubectl /usr/local/bin/    
+if kubectl version --client > /dev/null 2>&1; then
+    echo "KUBECTL is already installed"
+    kubectl version --client
 else
-    echo "KUBECTL installation skipped ❌"
+    read -p "Want to install KUBECTL: [y/N] " KUBECTL
+
+    if [[ "$KUBECTL" == "y" || "$KUBECTL" == "Y" || "$KUBECTL" == "" ]]; then
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" > /dev/null
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/    
+    else
+        echo "KUBECTL installation skipped ❌"
+    fi
 fi
+
+
 
 ########################NEW_FEATURE################################
 # read -p "Want to install NEW_FEATURE: [y/N] " NEW_FEATURE
@@ -568,7 +605,6 @@ fi
 # else
 #     echo "NEW_FEATURE installation skipped ❌"
 # fi
-
 
 
 
