@@ -101,14 +101,16 @@ if ! check_already_install tree; then
 fi
 
 ########################NPM################################
-read -p "Want to install npm: [y/N] " npm
+if ! check_already_install npm; then
+    read -p "Want to install npm: [y/N] " npm
 
-if [[ "$npm" == "y" || "$npm" == "Y" || "$npm" == "" ]]; then
-    echo "It can take some time to install nodejs and npm, be patient... ⌛"
-    install_package nodejs
-    install_package npm
-else
-    echo "npm installation skipped ❌"
+    if [[ "$npm" == "y" || "$npm" == "Y" || "$npm" == "" ]]; then
+        echo "It can take some time to install nodejs and npm, be patient... ⌛" #TOFIX il se print pas
+        install_package nodejs
+        install_package npm
+    else
+        echo "npm installation skipped ❌"
+    fi
 fi
 
 
@@ -116,7 +118,7 @@ fi
 read -p "Want to install CARGO: [y/N] " CARGO
 
 if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
-    curl https://sh.rustup.rs -sSf | sh -s -- -y > /dev/null
+    curl https://sh.rustup.rs -sSf | sh -s -- -y > /dev/null #TOFIX il se cach pas
     source "$HOME/.cargo/env"
 else
     echo "CARGO installation skipped ❌"
@@ -125,32 +127,38 @@ fi
 
 
 ########################GO################################
-read -p "Want to install GO: [y/N] " GO
+if ! check_already_install golang; then
+    read -p "Want to install GO: [y/N] " GO
 
-if [[ "$GO" == "y" || "$GO" == "Y" || "$GO" == "" ]]; then
-    install_package golang
-else
-    echo "GO installation skipped ❌"
+    if [[ "$GO" == "y" || "$GO" == "Y" || "$GO" == "" ]]; then
+        install_package golang
+    else
+        echo "GO installation skipped ❌"
+    fi
 fi
 
 
 ########################PIP################################
-read -p "Want to install PIP: [y/N] " PIP
+if ! check_already_install pip; then
+    read -p "Want to install PIP: [y/N] " PIP
 
-if [[ "$PIP" == "y" || "$PIP" == "Y" || "$PIP" == "" ]]; then
-    install_package python3-pip
-else
-    echo "PIP installation skipped ❌"
+    if [[ "$PIP" == "y" || "$PIP" == "Y" || "$PIP" == "" ]]; then
+        install_package python3-pip
+    else
+        echo "PIP installation skipped ❌"
+    fi
 fi
 
 
 ########################PIPX################################
-read -p "Want to install PIPX: [y/N] " PIPX
+if ! check_already_install pipx; then
+    read -p "Want to install PIPX: [y/N] " PIPX
 
-if [[ "$PIPX" == "y" || "$PIPX" == "Y" || "$PIPX" == "" ]]; then
-    install_package python3-pipx
-else
-    echo "PIPX installation skipped ❌"
+    if [[ "$PIPX" == "y" || "$PIPX" == "Y" || "$PIPX" == "" ]]; then
+        install_package pipx
+    else
+        echo "PIPX installation skipped ❌"
+    fi
 fi
 
 
@@ -292,7 +300,7 @@ if ! check_already_install zsh; then
             if [[ "$zsh_shell" == "y" || "$zsh_shell" == "Y" || "$zsh_shell" == "" ]]; then
             echo "Need User session password"
                 chsh -s "$(which zsh)"
-                exec zsh #terminate the script, need to be the last command
+                # exec zsh #terminate the script, need to be the last command
             fi
         fi
 
@@ -302,12 +310,21 @@ if ! check_already_install zsh; then
 fi
 
 ########################MAKE################################
-read -p "Want to install NEW_FEATURE: [y/N] " install_make
+read -p "Want to install MAKE: [y/N] " install_make
 
 if [[ "$install_make" == "y" || "$install_make" == "Y" || "$install_make" == "" ]]; then
     install_package make
 else
-    echo "NEW_FEATURE installation skipped ❌"
+    echo "MAKE installation skipped ❌"
+fi
+
+########################CMAKE################################
+read -p "Want to install CMAKE: [y/N] " install_cmake
+
+if [[ "$install_cmake" == "y" || "$install_cmake" == "Y" || "$install_cmake" == "" ]]; then
+    install_package cmake
+else
+    echo "CMAKE installation skipped ❌"
 fi
 
 # #######################K8S################################
@@ -334,6 +351,7 @@ fi
 read -p "Want to install nvim: [y/N] " nvim
 
 if [[ "$nvim" == "y" || "$nvim" == "Y" || "$nvim" == "" ]]; then
+    rm -rf neovim
     git clone https://github.com/neovim/neovim.git && cd neovim
     make CMAKE_BUILD_TYPE=RelWithDebInfo    
     sudo make install
@@ -347,6 +365,7 @@ fi
 read -p "Want to install tmux: [y/N] " tmux
 
 if [[ "$tmux" == "y" || "$tmux" == "Y" || "$tmux" == "" ]]; then
+    rm -rf tmux
     git clone https://github.com/tmux/tmux.git
     cd tmux
     ./configure
@@ -407,6 +426,7 @@ fi
 read -p "Want to install STORMY: [y/N] " STORMY
 
 if [[ "$STORMY" == "y" || "$STORMY" == "Y" || "$STORMY" == "" ]]; then
+    rm -rf stormy
     git clone https://github.com/ashish0kumar/stormy.git
     cd stormy
 
@@ -457,6 +477,7 @@ read -p "Want to install EDEXUI: [y/N] " EDEXUI
 if [[ "$EDEXUI" == "y" || "$EDEXUI" == "Y" || "$EDEXUI" == "" ]]; then
     sudo add-apt-repository universe                  
     sudo apt install libfuse2t64
+    rm -rf edex-ui
     git clone https://github.com/GitSquared/edex-ui.git && cd edex-ui
     #depend de l' OS (ici pour Debian (>= 13) and Ubuntu (>= 24.04):
     #more info https://github.com/AppImage/AppImageKit/wiki/FUSE
