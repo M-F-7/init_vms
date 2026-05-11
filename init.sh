@@ -100,6 +100,58 @@ if ! check_already_install tree; then
     fi
 fi
 
+########################NPM################################
+read -p "Want to install npm: [y/N] " npm
+
+if [[ "$npm" == "y" || "$npm" == "Y" || "$npm" == "" ]]; then
+    install_package nodejs
+    install_package npm
+else
+    echo "npm installation skipped ❌"
+fi
+
+
+########################CARGO################################
+read -p "Want to install CARGO: [y/N] " CARGO
+
+if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
+    curl https://sh.rustup.rs -sSf | sh -s -- -y
+else
+    echo "CARGO installation skipped ❌"
+fi
+
+
+
+########################GO################################
+read -p "Want to install GO: [y/N] " GO
+
+if [[ "$GO" == "y" || "$GO" == "Y" || "$GO" == "" ]]; then
+    rm -rf /usr/local/go && tar -C /usr/local -xzf go1.26.3.linux-amd64.tar.gz
+    export PATH=$PATH:/usr/local/go/bin
+else
+    echo "GO installation skipped ❌"
+fi
+
+
+########################PIP################################
+read -p "Want to install PIP: [y/N] " PIP
+
+if [[ "$PIP" == "y" || "$PIP" == "Y" || "$PIP" == "" ]]; then
+    install_package python3-pip
+else
+    echo "PIP installation skipped ❌"
+fi
+
+
+########################PIPX################################
+read -p "Want to install PIPX: [y/N] " PIPX
+
+if [[ "$PIPX" == "y" || "$PIPX" == "Y" || "$PIPX" == "" ]]; then
+    install_package python3-pipx
+else
+    echo "PIPX installation skipped ❌"
+fi
+
 
 
 ########################GIT################################
@@ -188,10 +240,6 @@ if ! check_already_install docker.io; then
 fi
 
 
-########################K8s################################
-#dpkg -s kubectl
-
-
 ########################CODE################################
 if ! check_already_install code; then
     read -p "⌛ Want to install code: [y/N] " install_code
@@ -261,8 +309,8 @@ else
     echo "NEW_FEATURE installation skipped ❌"
 fi
 
-########################K8S################################
-#dpkg -s kubectl
+# #######################K8S################################
+# dpkg -s kubectl
 # read -p "Want to install NEW_FEATURE: [y/N] " install_k8s
 
 # if [[ "$install_k8s" == "y" || "$install_k8s" == "Y" || "$install_k8s" == "" ]]; then
@@ -270,6 +318,181 @@ fi
 # else
 #     echo "NEW_FEATURE installation skipped ❌"
 # fi
+
+########################OPENCODE################################
+read -p "Want to install opencode: [y/N] " opencode
+
+if [[ "$opencode" == "y" || "$opencode" == "Y" || "$opencode" == "" ]]; then
+    curl -fsSL https://opencode.ai/install | bash
+else
+    echo "opencode installation skipped ❌"
+fi
+ 
+
+########################NVIM################################
+read -p "Want to install nvim: [y/N] " nvim
+
+if [[ "$nvim" == "y" || "$nvim" == "Y" || "$nvim" == "" ]]; then
+    git clone https://github.com/neovim/neovim.git && cd neovim
+    make CMAKE_BUILD_TYPE=RelWithDebInfo    
+    sudo make install
+else
+    echo "nvim installation skipped ❌"
+fi
+
+
+
+########################TMUX################################
+read -p "Want to install tmux: [y/N] " tmux
+
+if [[ "$tmux" == "y" || "$tmux" == "Y" || "$tmux" == "" ]]; then
+    git clone https://github.com/tmux/tmux.git
+    cd tmux
+    ./configure
+    make
+    sudo make install
+else
+    echo "tmux installation skipped ❌"
+fi
+
+
+
+########################SUPERFILE################################
+read -p "Want to install superfile: [y/N] " superfile
+
+if [[ "$superfile" == "y" || "$superfile" == "Y" || "$superfile" == "" ]]; then
+    bash -c "$(curl -sLo- https://superfile.dev/install.sh)"
+else
+    echo "superfile installation skipped ❌"
+fi
+
+
+
+########################BRANCHLET################################
+read -p "Want to install branchlet: [y/N] " branchlet
+
+if [[ "$branchlet" == "y" || "$branchlet" == "Y" || "$branchlet" == "" ]]; then
+    npm install -g branchlet
+else
+    echo "branchlet installation skipped ❌"
+fi
+
+
+
+########################PKGTOP################################
+read -p "Want to install PKGTOP: [y/N] " PKGTOP
+
+if [[ "$PKGTOP" == "y" || "$PKGTOP" == "Y" || "$PKGTOP" == "" ]]; then
+    git clone https://aur.archlinux.org/pkgtop.git && cd pkgtop/
+    go build cmd/pkgtop.go
+    sudo mv pkgtop /usr/local/bin/
+else
+    echo "PKGTOP installation skipped ❌"
+fi
+
+
+
+########################TAPROOM################################
+# read -p "Want to install NEW_FEATURE: [y/N] " NEW_FEATURE
+
+# if [[ "$NEW_FEATURE" == "y" || "$NEW_FEATURE" == "Y" || "$NEW_FEATURE" == "" ]]; then
+#     install_package NEW_FEATURE
+# else
+#     echo "NEW_FEATURE installation skipped ❌"
+# fi
+
+
+########################STORMY################################
+read -p "Want to install STORMY: [y/N] " STORMY
+
+if [[ "$STORMY" == "y" || "$STORMY" == "Y" || "$STORMY" == "" ]]; then
+    git clone https://github.com/ashish0kumar/stormy.git
+    cd stormy
+
+    # Build the application
+    go build
+
+    # Move to a directory in your PATH
+    sudo mv stormy /usr/local/bin/
+else
+    echo "STORMY installation skipped ❌"
+fi
+
+
+########################SMASSH################################
+read -p "Want to install SMASSH: [y/N] " SMASSH
+
+if [[ "$SMASSH" == "y" || "$SMASSH" == "Y" || "$SMASSH" == "" ]]; then
+    pip install smassh
+else
+    echo "SMASSH installation skipped ❌"
+fi
+
+
+########################JRNL################################
+read -p "Want to install JRNL: [y/N] " JRNL
+
+if [[ "$JRNL" == "y" || "$JRNL" == "Y" || "$JRNL" == "" ]]; then
+    pipx install jrnl
+else
+    echo "JRNL installation skipped ❌"
+fi
+
+
+
+########################NAVI################################
+# read -p "Want to install NAVI: [y/N] " NAVI
+
+# if [[ "$NAVI" == "y" || "$NAVI" == "Y" || "$NAVI" == "" ]]; then
+#     install_package NAVI
+# else
+#     echo "NAVI installation skipped ❌"
+# fi
+
+
+########################EDEXUI################################
+read -p "Want to install EDEXUI: [y/N] " EDEXUI
+
+if [[ "$EDEXUI" == "y" || "$EDEXUI" == "Y" || "$EDEXUI" == "" ]]; then
+    sudo add-apt-repository universe                  
+    sudo apt install libfuse2t64
+    git clone https://github.com/GitSquared/edex-ui.git && cd edex-ui
+    #depend de l' OS (ici pour Debian (>= 13) and Ubuntu (>= 24.04):
+    #more info https://github.com/AppImage/AppImageKit/wiki/FUSE
+    npm run build-linux
+    # ./eDEX-UI.AppImage --appimage-extract 
+    sudo chown root:root squashfs-root/chrome-sandbox
+    sudo chmod 4755 squashfs-root/chrome-sandbox
+    mv squashfs-root ~/
+    #./squashfs-root/AppRun
+else
+    echo "EDEXUI installation skipped ❌"
+fi
+
+
+
+########################KIND################################
+read -p "Want to install KIND: [y/N] " KIND
+
+if [[ "$KIND" == "y" || "$KIND" == "Y" || "$KIND" == "" ]]; then
+    curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+    chmod +x ./kind
+    sudo mv ./kind /usr/local/bin/kind
+else
+    echo "KIND installation skipped ❌"
+fi
+
+
+########################KUBECTL################################
+read -p "Want to install KUBECTL: [y/N] " KUBECTL
+
+if [[ "$KUBECTL" == "y" || "$KUBECTL" == "Y" || "$KUBECTL" == "" ]]; then
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod +x kubectl
+    sudo mv kubectl /usr/local/bin/    
+else
+    echo "KUBECTL installation skipped ❌"
+fi
 
 ########################NEW_FEATURE################################
 # read -p "Want to install NEW_FEATURE: [y/N] " NEW_FEATURE
@@ -279,3 +502,35 @@ fi
 # else
 #     echo "NEW_FEATURE installation skipped ❌"
 # fi
+
+
+
+
+########################ASSERT################################
+curl -V
+tree --version
+npm -v
+cargo -V
+go version
+pip --version
+pipx --version
+git --version
+ssh -V
+docker --version
+code --version | head -n 1
+zsh --version
+make --version
+opencode --version
+nvim --version | head -n 1
+tmux -V
+# taproom --version
+superfile --version
+branchlet --version
+pkgtop -v
+stormy --version
+smassh --version
+jrnl --version
+# navi --version
+ls ~/squashfs-root/edex-ui || echo "EDEXUI version not found"
+kubectl version --client
+kind version

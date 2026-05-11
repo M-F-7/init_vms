@@ -1,37 +1,72 @@
-need to add opencode, nvim, tmux (multiple terminal window), superfile (file manager), branchlet (git branches manager), pkgtop & taproom (interactive packets manager(LINUX & MACOS), stormy(weather info (maybe useful to be integrated), smassh(monkey type), jrnl(journal), navi (mini-man)
+## Packages and Tools installed by `init.sh`
 
+Use the checklist below to track which tools are installed on your system after running `init.sh`.
+Tick the boxes after you verify each tool (or run the script and check them).
 
-✨ edex-ui ✨
-DL le bon format https://github.com/gitsquared/edex-ui/releases
+### APT / system packages
+- [ ] curl
+- [ ] tree
+- [ ] nodejs
+- [ ] npm
+- [ ] python3-pip
+- [ ] python3-pipx
+- [ ] git
+- [ ] ssh (openssh-client / openssh-server)
+- [ ] docker.io
+- [ ] code (Visual Studio Code)
+- [ ] zsh
+- [ ] make
+- [ ] wget
+- [ ] gpg
+- [ ] libfuse2 (required by eDEX-UI/AppImage)
 
-sudo add-apt-repository universe                  
-sudo apt install libfuse2t64
+### Language/runtime installers / managers
+- [ ] rustup / cargo (installed via rustup)
+- [ ] Go (installed from tarball to /usr/local/go)
 
-#depend de l' OS (ici pour Debian (>= 13) and Ubuntu (>= 24.04):
-#more info https://github.com/AppImage/AppImageKit/wiki/FUSE
-./eDEX-UI.AppImage --appimage-extract 
-sudo chown root:root squashfs-root/chrome-sandbox
-sudo chmod 4755 squashfs-root/chrome-sandbox
+### Python / pipx packages
+- [ ] smassh (pip)
+- [ ] jrnl (pipx)
 
-mv squashfs-root ~/
-./squashfs-root/AppRun
+### npm / node tools
+- [ ] branchlet (npm -g)
 
+### Tools installed from source or other methods
+- [ ] opencode (install script)
+- [ ] neovim (build from source)
+- [ ] tmux (build from source)
+- [ ] superfile (install script)
+- [ ] pkgtop (build/go)
+- [ ] stormy (go build)
+- [ ] eDEX-UI (AppImage / npm build)
+- [ ] kind (download binary)
+- [ ] kubectl (download binary)
 
-npm et cargo
+### Post-install checks (commands used in the script)
+- [ ] `curl -V`
+- [ ] `tree --version`
+- [ ] `npm -v`
+- [ ] `cargo -V`
+- [ ] `go version`
+- [ ] `pip --version`
+- [ ] `pipx --version`
+- [ ] `git --version`
+- [ ] `ssh -V`
+- [ ] `docker --version`
+- [ ] `code --version`
+- [ ] `zsh --version`
+- [ ] `make --version`
+- [ ] `opencode --version`
+- [ ] `nvim --version`
+- [ ] `tmux -V`
+- [ ] `superfile --version`
+- [ ] `branchlet --version`
+- [ ] `pkgtop -v`
+- [ ] `stormy --version`
+- [ ] `smassh --version`
+- [ ] `jrnl --version`
+- [ ] `kubectl version --client`
+- [ ] `kind version`
 
-npm -v
-Sur Linux :
-sudo apt update
-sudo apt install nodejs npm
-Mieux pour avoir une version récente : utiliser nvm :
-curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-source ~/.zshrc
-nvm install --lts
-2. cargo
-cargo est fourni avec rustup (gestionnaire officiel Rust).
-Installe-le avec :
-curl https://sh.rustup.rs -sSf | sh
-source ~/.cargo/env
-Puis vérifie :
-rustc -V
-cargo -V
+If you want, I can try to detect currently installed packages and auto-check boxes, or add a script that outputs a Markdown-ready checklist with current statuses.
+
