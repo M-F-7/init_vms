@@ -11,6 +11,8 @@ sudo apt install libfuse2t64
 ./eDEX-UI.AppImage --appimage-extract
 sudo chown root:root squashfs-root/chrome-sandbox
 sudo chmod 4755 squashfs-root/chrome-sandbox
+
+mv squashfs-root ~/
 ./squashfs-root/AppRun
 
 
