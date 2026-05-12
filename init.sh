@@ -123,7 +123,7 @@ else
 
     if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
         curl https://sh.rustup.rs -sSf | sh -s -- -y > /dev/null #TOFIX il se cach pas
-        source "$HOME/.cargo/env" #TOFIX: il ne se fais pas sous shekk ou enlever l expand 
+        source "~/.cargo/env" #TOFIX: il ne se fais pas sous shekk ou enlever l expand 
     else
         echo "CARGO installation skipped ❌"
     fi
@@ -261,7 +261,7 @@ if ! check_already_install code; then #TOFIX: wrong version
             install_package wget
         fi
         if ! check_already_install gpg; then
-        install_package gpg
+            install_package gpg
         fi
         # Import de la clé Microsoft
         wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/ms_vscode.gpg > /dev/null
