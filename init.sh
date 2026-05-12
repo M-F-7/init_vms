@@ -578,8 +578,12 @@ else
         # sudo chown root:root squashfs-root/chrome-sandbox
         # sudo chmod 4755 squashfs-root/chrome-sandbox
         # mv squashfs-root ~/
+        # curl -L -o edex-ui.AppImage \
+        # https://github.com/GitSquared/edex-ui/releases/download/v2.2.8/eDEX-UI-Linux-x86_64.AppImage > /dev/null 2>&1
+        export PLAT=$(uname -m)
+
         curl -L -o edex-ui.AppImage \
-        https://github.com/GitSquared/edex-ui/releases/download/v2.2.8/eDEX-UI-Linux-x86_64.AppImage > /dev/null 2>&1
+        "https://github.com/GitSquared/edex-ui/releases/download/v2.2.8/eDEX-UI-Linux-${PLAT}.AppImage"
         chmod +x edex-ui.AppImage
         mv edex-ui.AppImage ~/.local/bin/edex-ui
         #./squashfs-root/AppRun
