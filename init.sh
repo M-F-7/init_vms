@@ -100,6 +100,39 @@ if ! check_already_install tree; then
     fi
 fi
 
+########################GIT################################
+if ! check_already_install git; then  #TOFIX: already install
+
+    read -p "⌛ Want to install git: [y/N] " install_git
+
+    if [[ "$install_git" == "y" || "$install_git" == "Y" || "$install_git" == "" ]]; then
+        install_package git
+
+        #read: get an input, -ps (p for prompt, s for silence)
+        read -p "Git username: " git_username
+        read -p "Git mail: " git_mail
+
+        git config --global user.name "$git_username"
+        git config --global user.email "$git_mail"
+
+    else
+        echo "Git installation skipped ❌"
+    fi
+fi
+
+
+########################MAKE################################
+if ! check_already_install make; then #TOFIX: already install
+    read -p "Want to install MAKE: [y/N] " install_make
+
+    if [[ "$install_make" == "y" || "$install_make" == "Y" || "$install_make" == "" ]]; then
+        install_package make
+    else
+        echo "MAKE installation skipped ❌"
+    fi
+fi
+
+
 ########################NPM################################
 if ! check_already_install npm; then
     read -p "Want to install npm: [y/N] " npm
@@ -163,28 +196,6 @@ if ! check_already_install pipx; then
         install_package pipx
     else
         echo "PIPX installation skipped ❌"
-    fi
-fi
-
-
-
-########################GIT################################
-if ! check_already_install git; then  #TOFIX: already install
-
-    read -p "⌛ Want to install git: [y/N] " install_git
-
-    if [[ "$install_git" == "y" || "$install_git" == "Y" || "$install_git" == "" ]]; then
-        install_package git
-
-        #read: get an input, -ps (p for prompt, s for silence)
-        read -p "Git username: " git_username
-        read -p "Git mail: " git_mail
-
-        git config --global user.name "$git_username"
-        git config --global user.email "$git_mail"
-
-    else
-        echo "Git installation skipped ❌"
     fi
 fi
 
@@ -311,17 +322,6 @@ if ! check_already_install zsh; then
 
     else
         echo "Zsh installation skipped ❌"
-    fi
-fi
-
-########################MAKE################################
-if ! check_already_install make; then #TOFIX: already install
-    read -p "Want to install MAKE: [y/N] " install_make
-
-    if [[ "$install_make" == "y" || "$install_make" == "Y" || "$install_make" == "" ]]; then
-        install_package make
-    else
-        echo "MAKE installation skipped ❌"
     fi
 fi
 
@@ -514,7 +514,8 @@ else
     read -p "Want to install SMASSH: [y/N] " SMASSH
 
     if [[ "$SMASSH" == "y" || "$SMASSH" == "Y" || "$SMASSH" == "" ]]; then
-        pipx install smassh
+        pipx install smassh > /dev/null
+        echo "SMASSH is correctly installed ✅"
     else
         echo "SMASSH installation skipped ❌"
     fi
@@ -528,7 +529,8 @@ else
     read -p "Want to install JRNL: [y/N] " JRNL
 
     if [[ "$JRNL" == "y" || "$JRNL" == "Y" || "$JRNL" == "" ]]; then
-        pipx install jrnl
+        pipx install jrnl > /dev/null
+        echo "JRNL is correctly installed ✅"
     else
         echo "JRNL installation skipped ❌"
     fi
@@ -631,7 +633,7 @@ exec zsh
 curl -V
 tree --version
 npm -v
-cargo -V
+cargo -V #TOFIX: il se print pas
 go version
 pip --version
 pipx --version
@@ -643,16 +645,16 @@ zsh --version
 make --version
 opencode --version
 nvim --version | head -n 1
-tmux -V
+tmux -V #TOFIX: il se print pas
 # taproom --version
-superfile --version
+superfile --version #TOFIX: il se print pas
 branchlet --version
 pkgtop -v
 stormy --version
-smassh --version
-jrnl --version
+smassh --version #TOFIX: il se print pas
+jrnl --version #TOFIX: il se print pas
 # navi --version
-ls ~/squashfs-root/edex-ui || echo "EDEXUI version not found"
+ls ~/squashfs-root/edex-ui || echo "EDEXUI version not found" #TOFIX: il se print pas
 kubectl version --client
 kind version
 
