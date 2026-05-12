@@ -52,5 +52,3 @@ cl() {
 eui() {
 	cd ~ && ./squashfs-root/edex-ui
 }
-
-. "$HOME/.local/bin/env"

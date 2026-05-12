@@ -1,7 +1,9 @@
-ajouter les files de config (i.e tmux env ou config nvim)
+ajouter les files de config:
+opencode: skills
+nvim: config
+tmux: env
+jrnl: aussi
+edexui: custom
+
 
 cacher des output 
-
-rm les repo cloned
-
-mouve les exécutable si besoin - tmux superfile smassh jrnl
