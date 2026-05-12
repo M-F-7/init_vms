@@ -656,7 +656,7 @@ fi
 #     echo "NEW_FEATURE installation skipped ❌"
 # fi
 
-exec zsh
+# exec zsh
 
 
 
