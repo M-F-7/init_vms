@@ -4,29 +4,4 @@ cacher des output
 
 rm les repo cloned
 
-sudo apt upgrade dnsmasq
-mouve les exécutable si besoin - opencode tmux superfile
-
-
-
-Want to install superfile: [y/N] y
-tar: Le mot cl\Uffffffffnconnu \Uffffffff LIBARCHIVE.xattr.com.apple.provenance \Uffffffff pour l'en-t\Uffffffff \Uffffffffndu a \Uffffffff ignor\Uffffffffar: Le mot cl\Uffffffffnconnu \Uffffffff LIBARCHIVE.xattr.com.apple.provenance \Uffffffff pour l'en-t\Uffffffff \Uffffffffndu a \Uffffffff ignor\Uffffffff
-
-
-
-
-
-- smassh
-\u26a0\ufe0f  Note: '/home/test/.local/bin' is not on your PATH environment variable.
-    These apps will not be globally accessible until your PATH is updated. Run
-    `pipx ensurepath` to automatically add it, or manually modify your PATH in
-    your shell's config file (e.g. ~/.bashrc).
-
-
-
-    - jrnl
-\u26a0\ufe0f  Note: '/home/test/.local/bin' is not on your PATH environment variable.
-    These apps will not be globally accessible until your PATH is updated. Run
-    `pipx ensurepath` to automatically add it, or manually modify your PATH in
-    your shell's config file (e.g. ~/.bashrc).
-done! \u2728 \U0001f31f \u2728
+mouve les exécutable si besoin - tmux superfile smassh jrnl

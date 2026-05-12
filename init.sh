@@ -43,6 +43,12 @@ check_already_install() {
     fi
 }
 
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH"
+
+if ! grep -q 'export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH"' "$HOME/.zshrc" 2>/dev/null; then
+    echo 'export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH"' >> "$HOME/.zshrc"
+fi
+
 install_package()
 {
         local package="$1"
@@ -376,10 +382,13 @@ else
     if [[ "$nvim" == "y" || "$nvim" == "Y" || "$nvim" == "" ]]; then
         echo "It can take some time to install nvim, be patient... ⌛"
         rm -rf neovim
-        git clone https://github.com/neovim/neovim.git > /dev/null 2>&1 && cd neovim > /dev/null 2>&1
+        git clone https://github.com/neovim/neovim.git > /dev/null 2>&1
+        cd neovim > /dev/null 2>&1
         make CMAKE_BUILD_TYPE=RelWithDebInfo > /dev/null 2>&1
         sudo make install > /dev/null 2>&1
         echo "NVIM is correctly installed ✅"
+        cd ..
+        rm -rf neovim
     else
         echo "nvim installation skipped ❌"
     fi
@@ -407,8 +416,11 @@ else
         install_package ncurses-dev
         sh autogen.sh > /dev/null 2>&1
         ./configure && make > /dev/null 2>&1
-        # add tmux to a directory in your PATH
+            sudo make install > /dev/null 2>&1
+            echo "tmux is correctly installed ✅"
         echo "tmux is correctly installed ✅"
+        cd ..
+        rm -rf tmux
     else
         echo "tmux installation skipped ❌"
     fi
@@ -429,8 +441,11 @@ else
         git clone https://github.com/yorukot/superfile.git --depth=1 > /dev/null 2>&1
         cd superfile
         ./build.sh > /dev/null 2>&1
-        sudo mv ./bin/spf /usr/local/bin
+            sudo mv ./bin/spf /usr/local/bin/spf
+            sudo ln -sf /usr/local/bin/spf /usr/local/bin/superfile
         echo "SUPERFILE is correctly installed ✅"
+        cd ..
+        rm -rf superfile
     else
         echo "superfile installation skipped ❌"
     fi
@@ -465,11 +480,14 @@ else
 
     if [[ "$PKGTOP" == "y" || "$PKGTOP" == "Y" || "$PKGTOP" == "" ]]; then
         rm -rf pkgtop
-        git clone https://github.com/orhun/pkgtop.git > /dev/null && cd pkgtop/
+        git clone https://github.com/orhun/pkgtop.git > /dev/null 2>&1 
+        cd pkgtop/
         # git clone https://aur.archlinux.org/pkgtop.git > /dev/null && cd pkgtop/ 
         go build cmd/pkgtop.go > /dev/null
         sudo mv pkgtop /usr/local/bin/
         echo "PKGTOP is correctly installed ✅"
+        cd ..
+        rm -rf pkgtop
     else
         echo "PKGTOP installation skipped ❌"
     fi
@@ -503,6 +521,9 @@ else
 
         # Move to a directory in your PATH
         sudo mv stormy /usr/local/bin/
+        echo "STORMY is correctly installed ✅"
+        cd ..
+        rm -rf stormy
     else
         echo "STORMY installation skipped ❌"
     fi
@@ -586,6 +607,7 @@ else
         "https://github.com/GitSquared/edex-ui/releases/download/v2.2.8/eDEX-UI-Linux-${PLAT}.AppImage"
         chmod +x edex-ui.AppImage
         mv edex-ui.AppImage ~/.local/bin/edex-ui
+        echo "EDEXUI is correctly installed ✅"
         #./squashfs-root/AppRun
     else
         echo "EDEXUI installation skipped ❌"
@@ -604,6 +626,7 @@ else
         curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64 > /dev/null
         chmod +x ./kind
         sudo mv ./kind /usr/local/bin/kind
+        echo "KIND is correctly installed ✅"
     else
         echo "KIND installation skipped ❌"
     fi
@@ -619,7 +642,8 @@ else
     if [[ "$KUBECTL" == "y" || "$KUBECTL" == "Y" || "$KUBECTL" == "" ]]; then
         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" > /dev/null
         chmod +x kubectl
-        sudo mv kubectl /usr/local/bin/    
+        sudo mv kubectl /usr/local/bin/
+        echo "KUBECTL is correctly installed ✅"    
     else
         echo "KUBECTL installation skipped ❌"
     fi
@@ -644,7 +668,7 @@ exec zsh
 curl -V
 tree --version
 npm -v
-cargo -V #TOFIX: il se print pas
+cargo -V
 go version
 pip --version
 pipx --version
@@ -663,10 +687,9 @@ branchlet --version
 pkgtop -v
 stormy --version
 smassh --version #TOFIX: il se print pas
-jrnl --version #TOFIX: il se p
-rint pas
+jrnl --version #TOFIX: il se print pas
 # navi --version
-ls ~/.local/bin/edex-ui #TOFIX: il se print pas
+ls ~/.local/bin/edex-ui
 kubectl version --client
 kind version
 
