@@ -1,4 +1,3 @@
-
 alias val="valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes"
 ff() {
     repo_root="$(git rev-parse --show-toplevel)"
@@ -20,3 +19,38 @@ ff() {
     git commit -m "$commit"
     git push
 }
+
+dx() {
+   find . -type f -exec sed -i 's/docker-compose/docker compose/g' {} +
+}
+
+cl() {
+    local current="$(pwd)"
+
+    local protected_paths=(
+        /
+        /root
+        /home
+        /usr
+        /bin
+        /sbin
+        /etc
+        /var
+        "$HOME"
+    )
+
+    for path in "${protected_paths[@]}"; do
+        [[ "$current" == "$path" ]] && {
+            echo "❌ Refusé : dossier protégé ($current)"
+            return 1
+        }
+    done
+
+    rm -rf -- * .[^.]*
+}
+
+eui() {
+	cd ~ && ./squashfs-root/edex-ui
+}
+
+. "$HOME/.local/bin/env"
