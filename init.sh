@@ -43,12 +43,6 @@ check_already_install() {
     fi
 }
 
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH"
-
-if ! grep -q 'export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH"' "$HOME/.zshrc" 2>/dev/null; then
-    echo 'export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH"' >> "$HOME/.zshrc"
-fi
-
 install_package()
 {
         local package="$1"
@@ -306,7 +300,10 @@ if ! check_already_install zsh; then
             # sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended > /dev/null
             RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null 2>&1
         fi
-
+        # Add custom PATH after oh-my-zsh is installed
+        if ! grep -q 'export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH"' "$HOME/.zshrc" 2>/dev/null; then
+            echo 'export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH"' >> "$HOME/.zshrc"
+        fi
         read -p "⌛ Want to add aliases in the .zshrc? : [y/N] " zsh_sc
         if [[ "$zsh_sc" == "y" || "$zsh_sc" == "Y" || "$zsh_sc" == "" ]]; then
             if [ -f alias.txt ]; then
