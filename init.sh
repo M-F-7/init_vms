@@ -296,7 +296,7 @@ if ! check_already_install zsh; then
 
     if [[ "$install_zsh" == "y" || "$install_zsh" == "Y" || "$install_zsh" == "" ]]; then
         if [ ! -d "$HOME/.oh-my-zsh" ]; then
-            install_package zsh
+            install_package zsh > /dev/null
             # sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended > /dev/null
             RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null
         fi
@@ -376,7 +376,7 @@ else
     if [[ "$nvim" == "y" || "$nvim" == "Y" || "$nvim" == "" ]]; then
         echo "It can take some time to install nvim, be patient... ⌛"
         rm -rf neovim
-        git clone https://github.com/neovim/neovim.git && cd neovim > /dev/null
+        git clone https://github.com/neovim/neovim.git > /dev/null && cd neovim > /dev/null
         make CMAKE_BUILD_TYPE=RelWithDebInfo > /dev/null
         sudo make install > /dev/null
         echo "NVIM is correctly installed ✅"
@@ -402,6 +402,7 @@ else
         install_package libtool
         install_package automake
         install_package pkg-config
+        install package libevent-dev
         sh autogen.sh > /dev/null
         ./configure && make > /dev/null
         # add tmux to a directory in your PATH
