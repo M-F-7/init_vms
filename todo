@@ -5,3 +5,4 @@ cacher des output
 rm les repo cloned
 
 sudo apt upgrade dnsmasq
+mouve les exécutable si besoin 
