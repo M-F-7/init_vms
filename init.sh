@@ -412,7 +412,7 @@ else
         install_package yacc #byacc
         install_package ncurses-dev
         sh autogen.sh > /dev/null 2>&1
-        ./configure && make > /dev/null 2>&1
+        ./configure > /dev/null 2>&1 && make > /dev/null 2>&1
         sudo make install > /dev/null 2>&1        
         echo "tmux is correctly installed ✅"
         cd ..
