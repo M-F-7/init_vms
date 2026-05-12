@@ -15,14 +15,14 @@ zsh --version
 make --version
 opencode --version
 nvim --version | head -n 1
-tmux -V #TOFIX: il se print pas
+tmux -V 
 # taproom --version
-superfile --version #TOFIX: il se print pas
+superfile --version
 branchlet --version
 pkgtop -v
 stormy --version
-smassh --version #TOFIX: il se print pas
-jrnl --version #TOFIX: il se print pas
+smassh --version 
+jrnl --version 
 # navi --version
 ls ~/.local/bin/edex-ui
 kubectl version --client

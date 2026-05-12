@@ -101,7 +101,7 @@ if ! check_already_install tree; then
 fi
 
 ########################GIT################################
-if ! check_already_install git; then  #TOFIX: already install
+if ! check_already_install git; then
 
     read -p "⌛ Want to install git: [y/N] " install_git
 
@@ -122,7 +122,7 @@ fi
 
 
 ########################MAKE################################
-if ! check_already_install make; then #TOFIX: already install
+if ! check_already_install make; then
     read -p "Want to install MAKE: [y/N] " install_make
 
     if [[ "$install_make" == "y" || "$install_make" == "Y" || "$install_make" == "" ]]; then
@@ -148,15 +148,15 @@ fi
 
 
 ########################CARGO################################
-if cargo --version > /dev/null 2>&1; then #TOFIX: il se print pas
+if cargo --version > /dev/null 2>&1; then
     echo "CARGO is already installed"
     cargo --version
 else
     read -p "Want to install CARGO: [y/N] " CARGO
 
     if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
-        curl https://sh.rustup.rs -sSf | sh -s -- -y 1> /dev/null 2>&1  #TOFIX il se cach pas
-        source "$HOME/.cargo/env" #TOFIX: il ne se fais pas sous shekk ou enlever l expand 
+        curl https://sh.rustup.rs -sSf | sh -s -- -y 1> /dev/null 2>&1
+        source "$HOME/.cargo/env"
         echo "CARGO is correctly installed ✅"
     else
         echo "CARGO installation skipped ❌"
@@ -165,7 +165,7 @@ fi
 
 
 ########################GO################################
-if ! check_already_install golang; then #TOFIX: TIMEOUT
+if ! check_already_install golang; then
     read -p "Want to install GO: [y/N] " GO
 
     if [[ "$GO" == "y" || "$GO" == "Y" || "$GO" == "" ]]; then
@@ -370,7 +370,7 @@ fi
 
 
 ########################NVIM################################
-if nvim --version > /dev/null 2>&1; then #TOFIX: il se print
+if nvim --version > /dev/null 2>&1; then
     echo "NVIM is already installed"
     nvim --version | head -n 1
 else
@@ -394,7 +394,7 @@ fi
 
 
 ########################TMUX################################
-if tmux -V > /dev/null 2>&1; then #TOFIX: configure: error: "libevent not found"
+if tmux -V > /dev/null 2>&1; then
     echo "TMUX is already installed"
     tmux -V
 else
