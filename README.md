@@ -4,6 +4,9 @@ Use the checklist below to track which tools are installed on your system after 
 Tick the boxes after you verify each tool (or run the script and check them).
 
 ### APT / system packages
+- [ ] `debian-13.4.0-amd64-netinst.iso`
+
+### APT / system packages
 - [ ] curl
 - [ ] tree
 - [ ] nodejs
@@ -67,6 +70,3 @@ Tick the boxes after you verify each tool (or run the script and check them).
 - [ ] `jrnl --version`
 - [ ] `kubectl version --client`
 - [ ] `kind version`
-
-If you want, I can try to detect currently installed packages and auto-check boxes, or add a script that outputs a Markdown-ready checklist with current statuses.
-

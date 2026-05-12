@@ -296,9 +296,9 @@ if ! check_already_install zsh; then
 
     if [[ "$install_zsh" == "y" || "$install_zsh" == "Y" || "$install_zsh" == "" ]]; then
         if [ ! -d "$HOME/.oh-my-zsh" ]; then
-            install_package zsh > /dev/null
+            install_package zsh > /dev/null 2>&1
             # sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended > /dev/null
-            RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null
+            RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null 2>&1
         fi
 
         read -p "⌛ Want to add aliases in the .zshrc? : [y/N] " zsh_sc
@@ -376,9 +376,9 @@ else
     if [[ "$nvim" == "y" || "$nvim" == "Y" || "$nvim" == "" ]]; then
         echo "It can take some time to install nvim, be patient... ⌛"
         rm -rf neovim
-        git clone https://github.com/neovim/neovim.git > /dev/null && cd neovim > /dev/null
-        make CMAKE_BUILD_TYPE=RelWithDebInfo > /dev/null
-        sudo make install > /dev/null
+        git clone https://github.com/neovim/neovim.git > /dev/null 2>&1 && cd neovim > /dev/null 2>&1
+        make CMAKE_BUILD_TYPE=RelWithDebInfo > /dev/null 2>&1
+        sudo make install > /dev/null 2>&1
         echo "NVIM is correctly installed ✅"
     else
         echo "nvim installation skipped ❌"
@@ -495,7 +495,7 @@ else
 
     if [[ "$STORMY" == "y" || "$STORMY" == "Y" || "$STORMY" == "" ]]; then
         rm -rf stormy
-        git clone https://github.com/ashish0kumar/stormy.git > /dev/null
+        git clone https://github.com/ashish0kumar/stormy.git > /dev/null 2>&1
         cd stormy
 
         # Build the application
@@ -551,7 +551,7 @@ fi
 
 
 ########################EDEXUI################################
-if ls ~/squashfs-root/edex-ui > /dev/null 2>&1; then
+if ls ~/.local/bin/edex-ui > /dev/null 2>&1; then
     echo "EDEXUI is already installed"
     #./squashfs-root/AppRun --version
 else
@@ -564,20 +564,24 @@ else
             # echo "deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs) universe" | sudo tee -a /etc/apt/sources.list.d/universe.list > /dev/null
             # sudo apt update -y > /dev/null
         # fi
-        install_package libfuse2t64
-        install_package rsync
-        install_package build-essential
-        rm -rf edex-ui
-        git clone https://github.com/GitSquared/edex-ui.git && cd edex-ui
+        # install_package libfuse2t64
+        # install_package rsync
+        # install_package build-essential
+        # rm -rf edex-ui
+        # git clone https://github.com/GitSquared/edex-ui.git && cd edex-ui
         #depend de l' OS (ici pour Debian (>= 13) and Ubuntu (>= 24.04):
         #more info https://github.com/AppImage/AppImageKit/wiki/FUSE
         echo "It can take some time to install EDEXUI, be patient... ⌛"
-        npm install --ignore-scripts > /dev/null
-        npm run build-linux
+        # npm install --ignore-scripts > /dev/null
+        # npm run build-linux
         # ./eDEX-UI.AppImage --appimage-extract 
-        sudo chown root:root squashfs-root/chrome-sandbox
-        sudo chmod 4755 squashfs-root/chrome-sandbox
-        mv squashfs-root ~/
+        # sudo chown root:root squashfs-root/chrome-sandbox
+        # sudo chmod 4755 squashfs-root/chrome-sandbox
+        # mv squashfs-root ~/
+        curl -L -o edex-ui.AppImage \
+        https://github.com/GitSquared/edex-ui/releases/download/v2.2.8/eDEX-UI-Linux-x86_64.AppImage > /dev/null 2>&1
+        chmod +x edex-ui.AppImage
+        mv edex-ui.AppImage ~/.local/bin/edex-ui
         #./squashfs-root/AppRun
     else
         echo "EDEXUI installation skipped ❌"
@@ -655,9 +659,10 @@ branchlet --version
 pkgtop -v
 stormy --version
 smassh --version #TOFIX: il se print pas
-jrnl --version #TOFIX: il se print pas
+jrnl --version #TOFIX: il se p
+rint pas
 # navi --version
-ls ~/squashfs-root/edex-ui || echo "EDEXUI version not found" #TOFIX: il se print pas
+ls ~/.local/bin/edex-ui #TOFIX: il se print pas
 kubectl version --client
 kind version
 
