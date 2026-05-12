@@ -402,9 +402,11 @@ else
         install_package libtool
         install_package automake
         install_package pkg-config
-        install package libevent-dev
-        sh autogen.sh > /dev/null
-        ./configure && make > /dev/null
+        install_package libevent-dev
+        install_package yacc #byacc
+        install_package ncurses-dev
+        sh autogen.sh > /dev/null 2>&1
+        ./configure && make > /dev/null 2>&1
         # add tmux to a directory in your PATH
         echo "tmux is correctly installed ✅"
     else
@@ -424,9 +426,9 @@ else
     if [[ "$superfile" == "y" || "$superfile" == "Y" || "$superfile" == "" ]]; then
         rm -rf superfile
         # bash -c "$(curl -sLo- https://superfile.dev/install.sh)" > /dev/null
-        git clone https://github.com/yorukot/superfile.git --depth=1
+        git clone https://github.com/yorukot/superfile.git --depth=1 > /dev/null 2>&1
         cd superfile
-        ./build.sh
+        ./build.sh > /dev/null 2>&1
         sudo mv ./bin/spf /usr/local/bin
         echo "SUPERFILE is correctly installed ✅"
     else
@@ -493,11 +495,11 @@ else
 
     if [[ "$STORMY" == "y" || "$STORMY" == "Y" || "$STORMY" == "" ]]; then
         rm -rf stormy
-        git clone https://github.com/ashish0kumar/stormy.git
+        git clone https://github.com/ashish0kumar/stormy.git > /dev/null
         cd stormy
 
         # Build the application
-        go build
+        go build > /dev/null 2>&1
 
         # Move to a directory in your PATH
         sudo mv stormy /usr/local/bin/
@@ -515,7 +517,7 @@ else
     read -p "Want to install SMASSH: [y/N] " SMASSH
 
     if [[ "$SMASSH" == "y" || "$SMASSH" == "Y" || "$SMASSH" == "" ]]; then
-        pipx install smassh > /dev/null
+        pipx install smassh > /dev/null 2>&1
         echo "SMASSH is correctly installed ✅"
     else
         echo "SMASSH installation skipped ❌"
@@ -530,7 +532,7 @@ else
     read -p "Want to install JRNL: [y/N] " JRNL
 
     if [[ "$JRNL" == "y" || "$JRNL" == "Y" || "$JRNL" == "" ]]; then
-        pipx install jrnl > /dev/null
+        pipx install jrnl > /dev/null 2>&1
         echo "JRNL is correctly installed ✅"
     else
         echo "JRNL installation skipped ❌"
