@@ -124,6 +124,7 @@ else
     if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
         curl https://sh.rustup.rs -sSf | sh -s -- -y 1> /dev/null 2>&1  #TOFIX il se cach pas
         source "$HOME/.cargo/env" #TOFIX: il ne se fais pas sous shekk ou enlever l expand 
+        echo "CARGO is correctly installed ✅"
     else
         echo "CARGO installation skipped ❌"
     fi
@@ -168,7 +169,7 @@ fi
 
 
 ########################GIT################################
-if ! check_already_install git; then 
+if ! check_already_install git; then  #TOFIX: already install
 
     read -p "⌛ Want to install git: [y/N] " install_git
 
@@ -270,7 +271,7 @@ if ! check_already_install code; then
           | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
         sudo apt update -y > /dev/null
         install_package code
-        code --version | head -n 1
+        # code --version | head -n 1
     else
         echo "Code installation skipped ❌"
     fi
@@ -314,7 +315,7 @@ if ! check_already_install zsh; then
 fi
 
 ########################MAKE################################
-if ! check_already_install make; then
+if ! check_already_install make; then #TOFIX: already install
     read -p "Want to install MAKE: [y/N] " install_make
 
     if [[ "$install_make" == "y" || "$install_make" == "Y" || "$install_make" == "" ]]; then
@@ -330,6 +331,7 @@ if ! check_already_install cmake; then
 
     if [[ "$install_cmake" == "y" || "$install_cmake" == "Y" || "$install_cmake" == "" ]]; then
         install_package cmake
+        
     else
         echo "CMAKE installation skipped ❌"
     fi
@@ -365,7 +367,7 @@ fi
 
 
 ########################NVIM################################
-if nvim --version > /dev/null 2>&1; then
+if nvim --version > /dev/null 2>&1; then #TOFIX: il se print
     echo "NVIM is already installed"
     nvim --version | head -n 1
 else
@@ -386,7 +388,7 @@ fi
 
 
 ########################TMUX################################
-if tmux -V > /dev/null 2>&1; then
+if tmux -V > /dev/null 2>&1; then #TOFIX: configure: error: "libevent not found"
     echo "TMUX is already installed"
     tmux -V
 else
@@ -419,10 +421,11 @@ else
     read -p "Want to install superfile: [y/N] " superfile
     
     if [[ "$superfile" == "y" || "$superfile" == "Y" || "$superfile" == "" ]]; then
+        rm -rf superfile
         # bash -c "$(curl -sLo- https://superfile.dev/install.sh)" > /dev/null
         git clone https://github.com/yorukot/superfile.git --depth=1
         cd superfile
-        # ./build.sh
+        ./build.sh
         sudo mv ./bin/spf /usr/local/bin
         echo "SUPERFILE is correctly installed ✅"
     else
@@ -441,8 +444,8 @@ else
     if [[ "$branchlet" == "y" || "$branchlet" == "Y" || "$branchlet" == "" ]]; then
         sudo npm install -g branchlet > /dev/null
         # Add branchlet to PATH
-        echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
-        source ~/.zshrc
+        # echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
+        # source ~/.zshrc
         echo "BRANCHLET is correctly installed ✅"
     else
         echo "branchlet installation skipped ❌"
@@ -458,7 +461,9 @@ else
     read -p "Want to install PKGTOP: [y/N] (go required)" PKGTOP
 
     if [[ "$PKGTOP" == "y" || "$PKGTOP" == "Y" || "$PKGTOP" == "" ]]; then
-        git clone https://aur.archlinux.org/pkgtop.git > /dev/null && cd pkgtop/ 
+        rm -rf pkgtop
+        git clone https://github.com/orhun/pkgtop.git > /dev/null && cd pkgtop/
+        # git clone https://aur.archlinux.org/pkgtop.git > /dev/null && cd pkgtop/ 
         go build cmd/pkgtop.go > /dev/null
         sudo mv pkgtop /usr/local/bin/
         echo "PKGTOP is correctly installed ✅"
@@ -509,7 +514,7 @@ else
     read -p "Want to install SMASSH: [y/N] " SMASSH
 
     if [[ "$SMASSH" == "y" || "$SMASSH" == "Y" || "$SMASSH" == "" ]]; then
-        pip install smassh
+        pipx install smassh
     else
         echo "SMASSH installation skipped ❌"
     fi
@@ -548,12 +553,21 @@ else
     read -p "Want to install EDEXUI: [y/N] " EDEXUI
 
     if [[ "$EDEXUI" == "y" || "$EDEXUI" == "Y" || "$EDEXUI" == "" ]]; then
-        sudo add-apt-repository universe                  
-        sudo apt install libfuse2t64
+        # Add universe repository if not present FOR UBUNTU (for debian 13 it's not needed because it's already in the sources.list)
+        
+        # if ! grep -q "universe" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+            # echo "deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs) universe" | sudo tee -a /etc/apt/sources.list.d/universe.list > /dev/null
+            # sudo apt update -y > /dev/null
+        # fi
+        install_package libfuse2t64
+        install_package rsync
+        install_package build-essential
         rm -rf edex-ui
         git clone https://github.com/GitSquared/edex-ui.git && cd edex-ui
         #depend de l' OS (ici pour Debian (>= 13) and Ubuntu (>= 24.04):
         #more info https://github.com/AppImage/AppImageKit/wiki/FUSE
+        echo "It can take some time to install EDEXUI, be patient... ⌛"
+        npm install --ignore-scripts > /dev/null
         npm run build-linux
         # ./eDEX-UI.AppImage --appimage-extract 
         sudo chown root:root squashfs-root/chrome-sandbox
@@ -608,6 +622,8 @@ fi
 # else
 #     echo "NEW_FEATURE installation skipped ❌"
 # fi
+
+exec zsh
 
 
 
