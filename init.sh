@@ -122,8 +122,8 @@ else
     read -p "Want to install CARGO: [y/N] " CARGO
 
     if [[ "$CARGO" == "y" || "$CARGO" == "Y" || "$CARGO" == "" ]]; then
-        curl https://sh.rustup.rs -sSf | sh -s -- -y > /dev/null #TOFIX il se cach pas
-        source "~/.cargo/env" #TOFIX: il ne se fais pas sous shekk ou enlever l expand 
+        curl https://sh.rustup.rs -sSf | sh -s -- -y 1> /dev/null 2>&1  #TOFIX il se cach pas
+        source "$HOME/.cargo/env" #TOFIX: il ne se fais pas sous shekk ou enlever l expand 
     else
         echo "CARGO installation skipped ❌"
     fi
@@ -131,7 +131,7 @@ fi
 
 
 ########################GO################################
-if ! check_already_install golang; then
+if ! check_already_install golang; then #TOFIX: TIMEOUT
     read -p "Want to install GO: [y/N] " GO
 
     if [[ "$GO" == "y" || "$GO" == "Y" || "$GO" == "" ]]; then
@@ -168,7 +168,7 @@ fi
 
 
 ########################GIT################################
-if ! check_already_install git; then #TOFIX: already install alors que nan
+if ! check_already_install git; then 
 
     read -p "⌛ Want to install git: [y/N] " install_git
 
@@ -254,7 +254,7 @@ fi
 
 
 ########################CODE################################
-if ! check_already_install code; then #TOFIX: wrong version
+if ! check_already_install code; then 
     read -p "⌛ Want to install code: [y/N] " install_code
     if [[ "$install_code" == "y" || "$install_code" == "Y" || "$install_code" == "" ]]; then
         if ! check_already_install wget; then
@@ -268,7 +268,7 @@ if ! check_already_install code; then #TOFIX: wrong version
         # Ajout du dépôt officiel
         echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ms_vscode.gpg] https://packages.microsoft.com/repos/code stable main" \
           | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-        # sudo apt update -y > /dev/null
+        sudo apt update -y > /dev/null
         install_package code
         code --version | head -n 1
     else
@@ -325,7 +325,7 @@ if ! check_already_install make; then
 fi
 
 ########################CMAKE################################
-if ! check_already_install cmake; then #TOFIX: il se print pas
+if ! check_already_install cmake; then
     read -p "Want to install CMAKE: [y/N] " install_cmake
 
     if [[ "$install_cmake" == "y" || "$install_cmake" == "Y" || "$install_cmake" == "" ]]; then
@@ -353,7 +353,7 @@ else
     read -p "Want to install opencode: [y/N] " opencode
 
     if [[ "$opencode" == "y" || "$opencode" == "Y" || "$opencode" == "" ]]; then
-        curl -fsSL https://opencode.ai/install | bash
+        curl -fsSL https://opencode.ai/install | bash > /dev/null 2>&1
             # Add opencode to PATH
         echo 'export PATH="$HOME/.opencode/bin:$PATH"' >> ~/.zshrc
         # source ~/.zshrc
@@ -374,7 +374,7 @@ else
     if [[ "$nvim" == "y" || "$nvim" == "Y" || "$nvim" == "" ]]; then
         echo "It can take some time to install nvim, be patient... ⌛"
         rm -rf neovim
-        git clone https://github.com/neovim/neovim.git && cd neovim
+        git clone https://github.com/neovim/neovim.git && cd neovim > /dev/null
         make CMAKE_BUILD_TYPE=RelWithDebInfo > /dev/null
         sudo make install > /dev/null
         echo "NVIM is correctly installed ✅"
@@ -394,7 +394,7 @@ else
 
     if [[ "$tmux" == "y" || "$tmux" == "Y" || "$tmux" == "" ]]; then
         rm -rf tmux
-        git clone https://github.com/tmux/tmux.git
+        git clone https://github.com/tmux/tmux.git > /dev/null
         cd tmux
         install_package autoconf
         install_package libtool
@@ -419,7 +419,11 @@ else
     read -p "Want to install superfile: [y/N] " superfile
     
     if [[ "$superfile" == "y" || "$superfile" == "Y" || "$superfile" == "" ]]; then
-        bash -c "$(curl -sLo- https://superfile.dev/install.sh)" > /dev/null
+        # bash -c "$(curl -sLo- https://superfile.dev/install.sh)" > /dev/null
+        git clone https://github.com/yorukot/superfile.git --depth=1
+        cd superfile
+        # ./build.sh
+        sudo mv ./bin/spf /usr/local/bin
         echo "SUPERFILE is correctly installed ✅"
     else
         echo "superfile installation skipped ❌"
@@ -435,7 +439,7 @@ else
     read -p "Want to install branchlet: [y/N] " branchlet
 
     if [[ "$branchlet" == "y" || "$branchlet" == "Y" || "$branchlet" == "" ]]; then
-        npm install -g branchlet > /dev/null
+        sudo npm install -g branchlet > /dev/null
         # Add branchlet to PATH
         echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
         source ~/.zshrc
@@ -451,7 +455,7 @@ if pkgtop -v > /dev/null 2>&1; then
     echo "PKGTOP is already installed"
     pkgtop -v
 else
-    read -p "Want to install PKGTOP: [y/N] " PKGTOP
+    read -p "Want to install PKGTOP: [y/N] (go required)" PKGTOP
 
     if [[ "$PKGTOP" == "y" || "$PKGTOP" == "Y" || "$PKGTOP" == "" ]]; then
         git clone https://aur.archlinux.org/pkgtop.git > /dev/null && cd pkgtop/ 
@@ -479,7 +483,7 @@ if stormy --version > /dev/null 2>&1; then
     echo "STORMY is already installed"
     stormy --version
 else
-    read -p "Want to install STORMY: [y/N] " STORMY
+    read -p "Want to install STORMY: [y/N] (go required)" STORMY
 
     if [[ "$STORMY" == "y" || "$STORMY" == "Y" || "$STORMY" == "" ]]; then
         rm -rf stormy
@@ -635,3 +639,5 @@ jrnl --version
 ls ~/squashfs-root/edex-ui || echo "EDEXUI version not found"
 kubectl version --client
 kind version
+
+exec zsh #terminate the script, need to be the last command

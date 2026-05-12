@@ -5,4 +5,9 @@ cacher des output
 rm les repo cloned
 
 sudo apt upgrade dnsmasq
-mouve les exécutable si besoin 
+mouve les exécutable si besoin - opencode tmux superfile
+
+
+
+Want to install superfile: [y/N] y
+tar: Le mot cl\Uffffffffnconnu \Uffffffff LIBARCHIVE.xattr.com.apple.provenance \Uffffffff pour l'en-t\Uffffffff \Uffffffffndu a \Uffffffff ignor\Uffffffffar: Le mot cl\Uffffffffnconnu \Uffffffff LIBARCHIVE.xattr.com.apple.provenance \Uffffffff pour l'en-t\Uffffffff \Uffffffffndu a \Uffffffff ignor\Uffffffff
