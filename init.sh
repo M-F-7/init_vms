@@ -405,7 +405,7 @@ else
 
     if [[ "$tmux" == "y" || "$tmux" == "Y" || "$tmux" == "" ]]; then
         rm -rf tmux
-        git clone https://github.com/tmux/tmux.git > /dev/null
+        git clone https://github.com/tmux/tmux.git > /dev/null 2>&1
         cd tmux
         install_package autoconf
         install_package libtool
@@ -416,8 +416,7 @@ else
         install_package ncurses-dev
         sh autogen.sh > /dev/null 2>&1
         ./configure && make > /dev/null 2>&1
-            sudo make install > /dev/null 2>&1
-            echo "tmux is correctly installed ✅"
+        sudo make install > /dev/null 2>&1        
         echo "tmux is correctly installed ✅"
         cd ..
         rm -rf tmux
@@ -483,7 +482,7 @@ else
         git clone https://github.com/orhun/pkgtop.git > /dev/null 2>&1 
         cd pkgtop/
         # git clone https://aur.archlinux.org/pkgtop.git > /dev/null && cd pkgtop/ 
-        go build cmd/pkgtop.go > /dev/null
+        go build cmd/pkgtop.go > /dev/null 2>&1
         sudo mv pkgtop /usr/local/bin/
         echo "PKGTOP is correctly installed ✅"
         cd ..
